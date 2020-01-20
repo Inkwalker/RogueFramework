@@ -29,7 +29,7 @@ namespace RogueFramework
             entities.Remove(entity);
         }
 
-        public Entity Get(Vector3Int position)
+        public Entity Get(Vector2Int position)
         {
             return entities.Find(entity => entity.Cell == position);
         }

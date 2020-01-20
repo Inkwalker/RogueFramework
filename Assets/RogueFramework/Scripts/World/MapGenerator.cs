@@ -16,28 +16,28 @@ namespace RogueFramework
 
         private void Generate(Vector2Int size)
         {
-            var map = GetComponent<Level>().Tilemap;
+            var map = GetComponent<Level>().Map;
 
             for (int x = 0; x < size.x; x++)
             {
                 for (int y = 0; y < size.y; y++)
                 {
-                    var position = new Vector3Int(x, y, 0);
+                    var position = new Vector2Int(x + 1, y + 1);
 
                     bool isWall = x == 0 || y == 0 || x == size.x - 1 || y == size.y - 1;
 
                     var cell = isWall ? wallTile : floorTile;
 
-                    map.SetTile(position, cell);
+                    map.Set(position, cell);
                 }
             }
 
-            map.SetTile(new Vector3Int(4, 4, 0), wallTile);
-            map.SetTile(new Vector3Int(4, 5, 0), wallTile);
-            map.SetTile(new Vector3Int(5, 4, 0), wallTile);
-            map.SetTile(new Vector3Int(5, 5, 0), wallTile);
-            map.SetColor(new Vector3Int(5, 5, 0), Color.gray);
-            map.SetColor(new Vector3Int(6, 6, 0), Color.gray);
+            map.Set(new Vector2Int(4, 4), wallTile);
+            map.Set(new Vector2Int(4, 5), wallTile);
+            map.Set(new Vector2Int(5, 4), wallTile);
+            map.Set(new Vector2Int(5, 5), wallTile);
+
+            GetComponent<Level>()?.FoV.Clear();
         }
     }
 }

@@ -12,37 +12,47 @@ namespace RogueFramework
             entity = GetComponent<Entity>();
         }
 
-        // Update is called once per frame
+        private IEnumerator Start()
+        {
+            yield return null; //Skip a frame
+
+            entity.Level.FoV.ComputeFoV(entity.Cell, 5);
+        }
+
         void Update()
         {
-            Vector3Int? cell = null;
+            Vector2Int? cell = null;
 
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                cell = entity.Cell + Vector3Int.left;
+                cell = entity.Cell + Vector2Int.left;
             }
 
             if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-                cell = entity.Cell - Vector3Int.left;
+                cell = entity.Cell - Vector2Int.left;
             }
 
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
-                cell = entity.Cell + Vector3Int.up;
+                cell = entity.Cell + Vector2Int.up;
             }
 
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
-                cell = entity.Cell - Vector3Int.up;
+                cell = entity.Cell - Vector2Int.up;
             }
 
             if (cell.HasValue)
             {
-                var tile = entity.Level.Tilemap.GetTile<MapTile>(cell.Value);
+                var tile = entity.Level.Map.Get(cell.Value);
 
                 if (tile != null && tile.Walkable)
-                    entity.Position = entity.Level.Grid.cellSize * 0.5f + cell.Value;
+                {
+                    entity.Position = cell.Value + new Vector2(0.5f, 0.5f);
+
+                    entity.Level.FoV.ComputeFoV(entity.Cell, 5);
+                }
             }
         }
     }

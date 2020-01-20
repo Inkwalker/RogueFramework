@@ -5,7 +5,7 @@ namespace RogueFramework
 {
     public class Entity : MonoBehaviour
     { 
-        public Vector3 Position
+        public Vector2 Position
         {
             get
             {
@@ -19,7 +19,14 @@ namespace RogueFramework
             }
 
         }
-        public Vector3Int Cell => Level.Grid.WorldToCell(transform.position);
+        public Vector2Int Cell
+        {
+            get
+            {
+                var gridPos = Level.Grid.WorldToCell(transform.position);
+                return new Vector2Int(gridPos.x, gridPos.y);
+            }
+        }
         public Level Level { get; private set; }
 
         public virtual void OnAddedToLevel(Level level)
