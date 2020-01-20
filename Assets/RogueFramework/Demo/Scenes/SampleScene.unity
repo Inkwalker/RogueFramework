@@ -309,8 +309,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1205932855}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.5, y: 5.5, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 6.5, y: 5.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 863274383}
@@ -352,7 +352,6 @@ GameObject:
   - component: {fileID: 1449855826}
   - component: {fileID: 1449855828}
   - component: {fileID: 1449855827}
-  - component: {fileID: 1449855829}
   m_Layer: 0
   m_Name: Tilemap
   m_TagString: Untagged
@@ -457,19 +456,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!114 &1449855829
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1449855825}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8600957c29991242954755492ccc5ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  level: {fileID: 1979497732}
 --- !u!1 &1979497728
 GameObject:
   m_ObjectHideFlags: 0
@@ -529,8 +515,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0931fe5b00603ea428c633e0d1a4253a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wallCell: {fileID: 11400000, guid: bb99f5181fe86f0459870c0d8e052262, type: 2}
-  floorCell: {fileID: 11400000, guid: e604f5f5d2b427c4b9e08abf7a809144, type: 2}
+  wallTile: {fileID: 11400000, guid: 461909eac60ef27468079d720a1bff0e, type: 2}
+  floorTile: {fileID: 11400000, guid: aeb62cbcbd591964bb4121e93b01c097, type: 2}
 --- !u!114 &1979497732
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,18 +1,19 @@
 ﻿using UnityEngine;
+using UnityEngine.Tilemaps;
 
 namespace RogueFramework
 {
     public class Level : MonoBehaviour
     {
         public Grid Grid { get; private set; }
-        public Map Map { get; private set; }
+        public Tilemap Tilemap { get; private set; }
         public EntityList Entities { get; private set; }
 
         private void Awake()
         {
-            Grid = GetComponent<Grid>();
+            Grid    = GetComponent<Grid>();
+            Tilemap = GetComponentInChildren<Tilemap>();
 
-            Map = new Map();
             Entities = new EntityList(this);
         }
 

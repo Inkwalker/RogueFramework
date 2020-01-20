@@ -15,24 +15,34 @@ namespace RogueFramework
         // Update is called once per frame
         void Update()
         {
+            Vector3Int? cell = null;
+
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                entity.Position += Vector3.left;
+                cell = entity.Cell + Vector3Int.left;
             }
 
             if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-                entity.Position -= Vector3.left;
+                cell = entity.Cell - Vector3Int.left;
             }
 
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
-                entity.Position += Vector3.up;
+                cell = entity.Cell + Vector3Int.up;
             }
 
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
-                entity.Position -= Vector3.up;
+                cell = entity.Cell - Vector3Int.up;
+            }
+
+            if (cell.HasValue)
+            {
+                var tile = entity.Level.Tilemap.GetTile<MapTile>(cell.Value);
+
+                if (tile != null && tile.Walkable)
+                    entity.Position = entity.Level.Grid.cellSize * 0.5f + cell.Value;
             }
         }
     }

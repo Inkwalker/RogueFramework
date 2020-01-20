@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Tilemaps;
 
 namespace RogueFramework
 {
-    /// <summary>
-    /// Map cell
-    /// </summary>
-    public abstract class ACell : ScriptableObject
+    [CreateAssetMenu]
+    public class MapTile : Tile
     {
         [SerializeField] bool walkable = false;
         [SerializeField] bool transparent = false;
