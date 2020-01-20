@@ -22,7 +22,7 @@ namespace RogueFramework
             {
                 for (int y = 0; y < size.y; y++)
                 {
-                    var position = new Vector2Int(x + 1, y + 1);
+                    var position = new Vector2Int(x , y );
 
                     bool isWall = x == 0 || y == 0 || x == size.x - 1 || y == size.y - 1;
 
