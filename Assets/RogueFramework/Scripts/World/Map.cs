@@ -26,16 +26,43 @@ namespace RogueFramework
 
         public MapTile Get(Vector2Int cell)
         {
-            var p = new Vector3Int(cell.x, cell.y, 0);
+            var p = GetTilemapPosition(cell);
 
             return tilemap.GetTile<MapTile>(p);
         }
 
         public void Set(Vector2Int cell, MapTile tile)
         {
-            var p = new Vector3Int(cell.x, cell.y, 0);
+            var p = GetTilemapPosition(cell);
 
             tilemap.SetTile(p, tile);
+        }
+
+        public bool IsWalkable(Vector2Int cell)
+        {
+            var p = GetTilemapPosition(cell);
+
+            var tile = tilemap.GetTile<MapTile>(p);
+
+            if (tile == null) return false;
+
+            return tile.Walkable;
+        }
+
+        public bool IsTransparent(Vector2Int cell)
+        {
+            var p = GetTilemapPosition(cell);
+
+            var tile = tilemap.GetTile<MapTile>(p);
+
+            if (tile == null) return false;
+
+            return tile.Transparent;
+        }
+
+        private Vector3Int GetTilemapPosition(Vector2Int cell)
+        {
+            return new Vector3Int(cell.x, cell.y, 0);
         }
     }
 }
