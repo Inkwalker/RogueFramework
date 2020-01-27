@@ -1,0 +1,82 @@
+﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+
+namespace RogueFramework
+{
+    public class TimeManager : MonoBehaviour
+    {
+        [SerializeField] Level level = default;
+        [SerializeField] float tickTime = 1f;
+
+        private long tickCount;
+
+        private void OnEnable()
+        {
+            StartCoroutine(Tick());
+        }
+
+        IEnumerator Tick()
+        {
+            yield return null;
+
+            var actionResults = new List<ActorActionResult>();
+
+            while (gameObject.activeInHierarchy)
+            {
+                Debug.Log($"Tick - {tickCount}");
+                //float startTime = Time.realtimeSinceStartup;
+
+                //Add energy and take turns
+                var actors = level.Entities.Actors;
+                foreach (var actor in actors)
+                {
+                    actor.AddEnergy(actor.Speed);
+
+                    if (actor.HasEnoughEnergy())
+                    {
+                        var result = actor.TakeTurn();
+                        if (result != null)
+                            actionResults.Add(result);
+                    }
+                }
+
+                //Wait till actions are finished
+                if (actionResults.Count > 0)
+                {
+                    bool allActionsFinished = false;
+                    while (allActionsFinished == false)
+                    {
+                        foreach (var result in actionResults)
+                        {
+                            if (result.Finished == false)
+                            {
+                                allActionsFinished = false;
+                                break;
+                            }
+
+                            allActionsFinished = true;
+                        }
+
+                        if (allActionsFinished == false)
+                            yield return null;
+                    }
+                    actionResults.Clear();
+                }
+
+                //float endTime = Time.realtimeSinceStartup;
+
+                //GC friendly wait
+                float timer = tickTime;// - (endTime - startTime);
+                while (timer > 0)
+                {
+                    yield return null;
+                    timer -= Time.deltaTime;
+
+                }
+
+                tickCount++;
+            }
+        }
+    }
+}

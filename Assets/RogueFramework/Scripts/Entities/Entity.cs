@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 namespace RogueFramework
 {
     public class Entity : MonoBehaviour
-    { 
+    {
         public Vector2 Position
         {
             get
@@ -28,6 +29,11 @@ namespace RogueFramework
             }
         }
         public Level Level { get; private set; }
+
+        public T GetEntityComponent<T>() where T : AEntityComponent
+        {
+            return GetComponentInChildren<T>();
+        }
 
         public virtual void OnAddedToLevel(Level level)
         {
