@@ -6,6 +6,8 @@ namespace RogueFramework
 {
     public class Entity : MonoBehaviour
     {
+        private AEntityComponent[] components;
+
         public Vector2 Position
         {
             get
@@ -30,14 +32,27 @@ namespace RogueFramework
         }
         public Level Level { get; private set; }
 
+        private void Awake()
+        {
+            components = GetComponentsInChildren<AEntityComponent>();
+        }
+
         public T GetEntityComponent<T>() where T : AEntityComponent
         {
-            return GetComponentInChildren<T>();
+            return Array.Find(components, c => c is T) as T;
         }
 
         public virtual void OnAddedToLevel(Level level)
         {
             Level = level;
+        }
+
+        public void Tick()
+        {
+            foreach (var component in components)
+            {
+                component.OnTick();
+            }
         }
     }
 }

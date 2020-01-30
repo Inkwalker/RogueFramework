@@ -295,6 +295,7 @@ GameObject:
   - component: {fileID: 1205932856}
   - component: {fileID: 1205932857}
   - component: {fileID: 1205932858}
+  - component: {fileID: 1205932859}
   m_Layer: 0
   m_Name: Hero
   m_TagString: Untagged
@@ -342,6 +343,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 4
+--- !u!114 &1205932859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1205932855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0de5a37b9f4b256418d5186108ed0d03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewDistance: 10
 --- !u!1 &1449855825
 GameObject:
   m_ObjectHideFlags: 0
@@ -501,6 +515,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: {fileID: 1979497732}
   tickTime: 0.2
+  OnCycleStart:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2106020082}
+        m_MethodName: Clear
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnCycleEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1575939168
 Transform:
   m_ObjectHideFlags: 0
@@ -644,7 +675,7 @@ TilemapRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2106020080}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1

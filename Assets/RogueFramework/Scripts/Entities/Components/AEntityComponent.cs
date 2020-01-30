@@ -7,5 +7,7 @@ namespace RogueFramework
     {
         private Entity entity;
         public Entity Entity { get { if (entity == null) entity = GetComponentInParent<Entity>(); return entity; } }
+
+        public virtual void OnTick() { }
     }
 }

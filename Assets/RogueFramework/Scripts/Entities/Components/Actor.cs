@@ -27,5 +27,10 @@ namespace RogueFramework
         {
             return Entity.Level.Map.IsWalkable(cell);
         }
+
+        public override void OnTick()
+        {
+            AddEnergy(speed);
+        }
     }
 }
