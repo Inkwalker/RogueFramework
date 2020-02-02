@@ -17,6 +17,9 @@ TextureImporter:
   - first:
       213: -6943188205917467898
     second: sprite_floor
+  - first:
+      213: -1359513959734424805
+    second: sprite_ghost
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -237,6 +240,27 @@ TextureImporter:
       bones: []
       spriteID: 5c3e42204d734904bb0efbdb740d6732
       internalID: -6943188205917467898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sprite_ghost
+      rect:
+        serializedVersion: 2
+        x: 442
+        y: 425
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88af507ce594a664f9886b88dc9cdbb6
+      internalID: -1359513959734424805
       vertices: []
       indices: 
       edges: []

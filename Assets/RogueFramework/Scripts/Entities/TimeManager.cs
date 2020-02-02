@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Events;
 
 namespace RogueFramework
 {
@@ -10,6 +11,9 @@ namespace RogueFramework
         [SerializeField] float tickTime = 1f;
 
         private long tickCount;
+
+        public UnityEvent OnCycleStart;
+        public UnityEvent OnCycleEnd;
 
         private void OnEnable()
         {
@@ -24,15 +28,21 @@ namespace RogueFramework
 
             while (gameObject.activeInHierarchy)
             {
+                OnCycleStart.Invoke();
+
                 Debug.Log($"Tick - {tickCount}");
                 //float startTime = Time.realtimeSinceStartup;
+
+                var entities = level.Entities.All;
+                foreach (var entity in entities)
+                {
+                    entity.Tick();
+                }
 
                 //Add energy and take turns
                 var actors = level.Entities.Actors;
                 foreach (var actor in actors)
                 {
-                    actor.AddEnergy(actor.Speed);
-
                     if (actor.HasEnoughEnergy())
                     {
                         var result = actor.TakeTurn();
@@ -76,6 +86,8 @@ namespace RogueFramework
                 }
 
                 tickCount++;
+
+                OnCycleEnd.Invoke();
             }
         }
     }

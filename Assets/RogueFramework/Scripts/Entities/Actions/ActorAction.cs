@@ -14,6 +14,13 @@ namespace RogueFramework
             Actor = actor;
         }
 
-        public abstract ActorActionResult Perform();
+        public ActorActionResult Perform()
+        {
+            Actor.Energy -= Cost;
+
+            return OnPerform();
+        }
+
+        protected abstract ActorActionResult OnPerform();
     }
 }

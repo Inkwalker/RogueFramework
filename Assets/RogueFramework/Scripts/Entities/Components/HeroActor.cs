@@ -44,9 +44,6 @@ namespace RogueFramework
                 if (delta.HasValue)
                 {
                     var action = new WalkAction(this, delta.Value);
-
-                    Energy -= action.Cost;
-
                     activeAction.SetResult(action.Perform());
                 }
             }
