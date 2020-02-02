@@ -14,7 +14,7 @@ namespace RogueFramework
             this.delta = delta;
         }
 
-        public override ActorActionResult Perform()
+        protected override ActorActionResult OnPerform()
         {
             var cell = Actor.Entity.Cell + delta;
             if (Actor.CanOccupy(cell))

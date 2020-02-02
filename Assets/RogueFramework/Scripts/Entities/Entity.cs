@@ -45,6 +45,11 @@ namespace RogueFramework
         public virtual void OnAddedToLevel(Level level)
         {
             Level = level;
+
+            foreach (var component in components)
+            {
+                component.OnLevelChanged();
+            }
         }
 
         public void Tick()
