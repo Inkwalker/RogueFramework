@@ -43,5 +43,12 @@ namespace RogueFramework
         {
             return entities.Find(entity => entity.Cell == position);
         }
+
+        public bool IsWalkable(Vector2Int position)
+        {
+            var entity = Get(position);
+
+            return entity == null || !entity.BlocksMovement;
+        }
     }
 }

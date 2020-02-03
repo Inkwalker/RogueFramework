@@ -9,7 +9,7 @@ namespace RogueFramework
     {
         private Tilemap tilemap;
 
-        [SerializeField] Map map = default;
+        [SerializeField] Level level = default;
         [SerializeField] Tile fogTile = default;
         [SerializeField] bool includeWalls = true;
 
@@ -28,7 +28,7 @@ namespace RogueFramework
         public void Clear()
         {
             tilemap.ClearAllTiles();
-            var bounds = map.Bounds;
+            var bounds = level.Map.Bounds;
 
             for (int y = bounds.yMin; y < bounds.yMax; y++)
             {
@@ -63,7 +63,7 @@ namespace RogueFramework
 
         public void AppendFoV(Vector2Int position, int distance)
         {
-            var visibleCells = GetVisiblePositions(map, position, distance, includeWalls);
+            var visibleCells = GetVisiblePositions(level, position, distance, includeWalls);
 
             foreach (var cell in visibleCells)
             {
@@ -77,7 +77,7 @@ namespace RogueFramework
 
             Line(from.x, from.y, to.x, to.y, (x, y) =>
             {
-                var tile = map.Get(new Vector2Int(x, y));
+                var tile = level.Map.Get(new Vector2Int(x, y));
 
                 result = tile.Transparent;
 
@@ -92,7 +92,7 @@ namespace RogueFramework
             return new Vector3Int(cellPosition.x, cellPosition.y, 0);
         }
 
-        private static IReadOnlyCollection<Vector2Int> GetVisiblePositions(Map map, Vector2Int position, int distance, bool includeWalls)
+        private static IReadOnlyCollection<Vector2Int> GetVisiblePositions(Level level, Vector2Int position, int distance, bool includeWalls)
         {
             var result = new HashSet<Vector2Int>();
 
@@ -110,12 +110,16 @@ namespace RogueFramework
                         (pX, pY) =>
                         {
                             var p = new Vector2Int(pX, pY);
-                            var tile = map.Get(p);
+                            var tile = level.Map.Get(p);
+                            var entity = level.Entities.Get(p);
 
-                            if (tile.Transparent || includeWalls)
+                            bool tileTransparent = tile != null && tile.Transparent;
+                            bool entityTransparent = entity == null || !entity.BlocksVision;
+
+                            if (tileTransparent || includeWalls)
                                 result.Add(p);
 
-                            return tile.Transparent;
+                            return tileTransparent && entityTransparent;
                         });
                     }
                 }

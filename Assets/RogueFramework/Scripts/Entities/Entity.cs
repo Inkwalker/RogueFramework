@@ -4,8 +4,12 @@ using UnityEngine;
 
 namespace RogueFramework
 {
+    [SelectionBase]
     public class Entity : MonoBehaviour
     {
+        [SerializeField] bool blocksMovement = true;
+        [SerializeField] bool blocksVision = false;
+
         private AEntityComponent[] components;
 
         public Vector2 Position
@@ -31,15 +35,17 @@ namespace RogueFramework
             }
         }
         public Level Level { get; private set; }
+        public bool BlocksMovement { get => blocksMovement; set => blocksMovement = value; }
+        public bool BlocksVision { get => blocksVision; set => blocksVision = value; }
 
         private void Awake()
         {
             components = GetComponentsInChildren<AEntityComponent>();
         }
 
-        public T GetEntityComponent<T>() where T : AEntityComponent
+        public T GetEntityComponent<T>(bool includeDisabled = false) where T : AEntityComponent
         {
-            return Array.Find(components, c => c is T) as T;
+            return Array.Find(components, c => c is T && (c.enabled || includeDisabled)) as T;
         }
 
         public virtual void OnAddedToLevel(Level level)

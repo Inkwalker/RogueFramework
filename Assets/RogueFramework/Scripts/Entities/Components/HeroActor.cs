@@ -43,7 +43,19 @@ namespace RogueFramework
 
                 if (delta.HasValue)
                 {
-                    var action = new WalkAction(this, delta.Value);
+                    var entity = Entity.Level.Entities.Get(Entity.Cell + delta.Value);
+                    var interactable = entity?.GetEntityComponent<Interactable>();
+
+                    ActorAction action;
+                    if (interactable != null)
+                    {
+                        action = new InteractAction(this, interactable);
+                    }
+                    else
+                    {
+                        action = new WalkAction(this, delta.Value);
+                    }
+
                     activeAction.SetResult(action.Perform());
                 }
             }

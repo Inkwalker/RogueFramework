@@ -30,9 +30,6 @@ namespace RogueFramework
             {
                 OnCycleStart.Invoke();
 
-                Debug.Log($"Tick - {tickCount}");
-                //float startTime = Time.realtimeSinceStartup;
-
                 var entities = level.Entities.All;
                 foreach (var entity in entities)
                 {
@@ -74,10 +71,8 @@ namespace RogueFramework
                     actionResults.Clear();
                 }
 
-                //float endTime = Time.realtimeSinceStartup;
-
                 //GC friendly wait
-                float timer = tickTime;// - (endTime - startTime);
+                float timer = tickTime;
                 while (timer > 0)
                 {
                     yield return null;
