@@ -20,6 +20,12 @@ TextureImporter:
   - first:
       213: -1359513959734424805
     second: sprite_ghost
+  - first:
+      213: -1316417618440688886
+    second: sprite_door
+  - first:
+      213: 6332891607292366484
+    second: sprite_door_frame
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -253,7 +259,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -261,6 +267,48 @@ TextureImporter:
       bones: []
       spriteID: 88af507ce594a664f9886b88dc9cdbb6
       internalID: -1359513959734424805
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sprite_door
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 374
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 933df845aaac4a846bbba491c22e4ec4
+      internalID: -1316417618440688886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sprite_door_frame
+      rect:
+        serializedVersion: 2
+        x: 153
+        y: 374
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 291a91823958fe5468aea10fd7b75d35
+      internalID: 6332891607292366484
       vertices: []
       indices: 
       edges: []
