@@ -43,6 +43,14 @@ namespace RogueFramework
             components = GetComponentsInChildren<AEntityComponent>();
         }
 
+        private void OnDestroy()
+        {
+            if (Level != null && Level.Entities != null)
+            {
+                Level.Entities.Remove(this);
+            }
+        }
+
         public T GetEntityComponent<T>(bool includeDisabled = false) where T : AEntityComponent
         {
             return Array.Find(components, c => c is T && (c.enabled || includeDisabled)) as T;

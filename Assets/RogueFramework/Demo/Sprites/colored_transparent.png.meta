@@ -26,6 +26,9 @@ TextureImporter:
   - first:
       213: 6332891607292366484
     second: sprite_door_frame
+  - first:
+      213: 8496755748741757982
+    second: sprite_potion
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -301,7 +304,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -309,6 +312,27 @@ TextureImporter:
       bones: []
       spriteID: 291a91823958fe5468aea10fd7b75d35
       internalID: 6332891607292366484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sprite_potion
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c17bd6bbfa4c8a743908d0a379b2fcf9
+      internalID: 8496755748741757982
       vertices: []
       indices: 
       edges: []
