@@ -37,7 +37,7 @@ namespace RogueFramework
             map.Set(new Vector2Int(5, 4), wallTile);
             map.Set(new Vector2Int(5, 5), wallTile);
 
-            GetComponent<Level>()?.FoV.Clear();
+            GetComponent<Level>()?.FoV.ClearFog();
         }
     }
 }

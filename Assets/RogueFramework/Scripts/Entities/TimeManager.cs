@@ -36,7 +36,7 @@ namespace RogueFramework
                     entity.Tick();
                 }
 
-                //Add energy and take turns
+                //Take turns
                 var actors = level.Entities.Actors;
                 foreach (var actor in actors)
                 {
@@ -54,6 +54,8 @@ namespace RogueFramework
                     bool allActionsFinished = false;
                     while (allActionsFinished == false)
                     {
+                        allActionsFinished = true;
+
                         foreach (var result in actionResults)
                         {
                             if (result.Finished == false)
@@ -61,8 +63,6 @@ namespace RogueFramework
                                 allActionsFinished = false;
                                 break;
                             }
-
-                            allActionsFinished = true;
                         }
 
                         if (allActionsFinished == false)
@@ -70,6 +70,10 @@ namespace RogueFramework
                     }
                     actionResults.Clear();
                 }
+
+                OnCycleEnd.Invoke();
+
+                tickCount++;
 
                 //GC friendly wait
                 float timer = tickTime;
@@ -79,10 +83,6 @@ namespace RogueFramework
                     timer -= Time.deltaTime;
 
                 }
-
-                tickCount++;
-
-                OnCycleEnd.Invoke();
             }
         }
     }
