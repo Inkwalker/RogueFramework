@@ -230,7 +230,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.24528301, g: 0.09371662, b: 0.20115177, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -880,6 +880,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   viewDistance: 10
+  explore: 1
 --- !u!1 &1449855825
 GameObject:
   m_ObjectHideFlags: 0
@@ -3682,7 +3683,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2106020082}
-        m_MethodName: Clear
+        m_MethodName: ClearFog
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3834,6 +3835,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: {fileID: 1979497732}
   fogTile: {fileID: 11400000, guid: f28c2aefc6e984d45bc21192e8d59fff, type: 2}
+  exploredTile: {fileID: 11400000, guid: d03fbf02d9b00f2499157c4fadbc8422, type: 2}
   includeWalls: 1
 --- !u!483693784 &2106020083
 TilemapRenderer:

@@ -7,25 +7,103 @@ namespace RogueFramework
     [RequireComponent(typeof(Tilemap))]
     public class FieldOfView : MonoBehaviour
     {
-        private Tilemap tilemap;
-
         [SerializeField] Level level = default;
         [SerializeField] Tile fogTile = default;
+        [SerializeField] Tile exploredTile = default;
         [SerializeField] bool includeWalls = true;
 
-        private delegate bool PlotFunction(int x, int y);
+        private Tilemap tilemap;
+        private HashSet<Vector2Int> exploredTiles;
+        private HashSet<Vector2Int> visibleTiles;
 
         private void Awake()
         {
             tilemap = GetComponent<Tilemap>();
+
+            exploredTiles = new HashSet<Vector2Int>();
+            visibleTiles  = new HashSet<Vector2Int>();
         }
 
         private void Start()
         {
-            Clear();
+            UpdateTiles();
+        }
+
+        public void ClearFog()
+        {
+            visibleTiles.Clear();
+            UpdateTiles();
+        }
+
+        public void ClearExplored()
+        {
+            exploredTiles.Clear();
+            UpdateTiles();
         }
 
         public void Clear()
+        {
+            visibleTiles.Clear();
+            exploredTiles.Clear();
+            UpdateTiles();
+        }
+
+        public void Set(Vector2Int cell, bool visible, bool explored)
+        {
+            if (visible)
+                visibleTiles.Add(cell);
+            else
+                visibleTiles.Remove(cell);
+
+            if (explored)
+                exploredTiles.Add(cell);
+            else
+                exploredTiles.Remove(cell);
+
+            SetTile(cell, visible, explored);
+        }
+
+        public bool IsVisible(Vector2Int cell)
+        {
+            return visibleTiles.Contains(cell);
+        }
+
+        public bool IsExplored(Vector2Int cell)
+        {
+            return exploredTiles.Contains(cell);
+        }
+
+        public void ComputeFoV(Vector2Int position, int distance, bool explore)
+        {
+            ClearFog();
+            AppendFoV(position, distance, explore);
+        }
+
+        public void AppendFoV(Vector2Int position, int distance, bool explore)
+        {
+            var visibleCells = GetVisiblePositions(level, position, distance, includeWalls);
+
+            foreach (var cell in visibleCells)
+            {
+                bool explored = IsExplored(cell) || explore;
+
+                Set(cell, true, explored);
+            }
+        }
+
+        public void AppendExplored(Vector2Int position, int distance)
+        {
+            var visibleCells = GetVisiblePositions(level, position, distance, includeWalls);
+
+            foreach (var cell in visibleCells)
+            {
+                bool visible = IsVisible(cell);
+
+                Set(cell, visible, true);
+            }
+        }
+
+        private void UpdateTiles()
         {
             tilemap.ClearAllTiles();
             var bounds = level.Map.Bounds;
@@ -35,40 +113,30 @@ namespace RogueFramework
                 for (int x = bounds.xMin; x < bounds.xMax; x++)
                 {
                     var cell = new Vector2Int(x, y);
+                    var mapTile = level.Map.Get(cell);
 
-                    Set(cell, false);
+                    bool explored = exploredTiles.Contains(cell);
+                    bool visible = visibleTiles.Contains(cell);
+
+                    if (mapTile != null)
+                    {
+                        SetTile(cell, visible, explored);
+                    }
                 }
             }
         }
 
-        public void Set(Vector2Int cell, bool visible)
+        private void SetTile(Vector2Int cell, bool visible, bool explored)
         {
+            Tile tile;
+
+            if (visible) tile = null;
+            else if (explored) tile = exploredTile;
+            else tile = fogTile;
+
             var pos = ToTilemapPosition(cell);
-            var tile = visible ? null : fogTile;
 
             tilemap.SetTile(pos, tile);
-        }
-
-        public bool Get(Vector2Int cell)
-        {
-            var pos = ToTilemapPosition(cell);
-            return tilemap.GetTile(pos) == null;
-        }
-
-        public void ComputeFoV(Vector2Int position, int distance)
-        {
-            Clear();
-            AppendFoV(position, distance);
-        }
-
-        public void AppendFoV(Vector2Int position, int distance)
-        {
-            var visibleCells = GetVisiblePositions(level, position, distance, includeWalls);
-
-            foreach (var cell in visibleCells)
-            {
-                Set(cell, true);
-            }
         }
 
         private bool IsVisible(Vector2Int from, Vector2Int to)
@@ -128,6 +196,7 @@ namespace RogueFramework
             return result;
         }
 
+        private delegate bool PlotFunction(int x, int y);
         private static void Line(int x0, int y0, int x1, int y1, PlotFunction plot)
         {
             int w = x1 - x0;
