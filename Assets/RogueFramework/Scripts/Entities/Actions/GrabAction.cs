@@ -23,7 +23,16 @@ namespace RogueFramework
             {
                 Debug.Log($"Grabbing item {target.name}");
 
-                Object.Destroy(target.gameObject);
+                var inv = Actor.Entity.GetEntityComponent<Inventory>();
+
+                if (inv != null)
+                {
+                    inv.Add(target);
+                }
+                else
+                {
+                    Debug.Log("Can't grab the item. The actor doesn't have an inventory.");
+                }
             }
 
             return null;

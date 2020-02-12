@@ -8,5 +8,6 @@ namespace RogueFramework
         [SerializeField] ItemType type;
 
         public ItemType Type => type;
+        public int Quantity { get; set; }
     }
 }

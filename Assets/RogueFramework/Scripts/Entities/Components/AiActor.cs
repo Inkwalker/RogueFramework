@@ -11,14 +11,17 @@ namespace RogueFramework
         {
             target = null;
 
-            var actors = Entity.Level.Entities.Actors;
-
-            foreach (var item in actors)
+            if (Entity.Level != null)
             {
-                if (item is HeroActor)
+                var actors = Entity.Level.Entities.Actors;
+
+                foreach (var item in actors)
                 {
-                    target = item;
-                    break;
+                    if (item is HeroActor)
+                    {
+                        target = item;
+                        break;
+                    }
                 }
             }
         }

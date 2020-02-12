@@ -40,6 +40,8 @@ namespace RogueFramework
         {
             entities.Remove(entity);
 
+            entity.OnAddedToLevel(null);
+
             var actor = entity.GetEntityComponent<Actor>();
             if (actor) actors.Remove(actor);
 
