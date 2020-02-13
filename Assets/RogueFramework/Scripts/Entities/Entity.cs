@@ -11,6 +11,15 @@ namespace RogueFramework
         [SerializeField] bool blocksVision = false;
 
         private AEntityComponent[] components;
+        public AEntityComponent[] Components
+        {
+            get
+            {
+                if (components == null)
+                    components = GetComponentsInChildren<AEntityComponent>();
+                return components;
+            }
+        }
 
         public Vector2 Position
         {
@@ -38,29 +47,16 @@ namespace RogueFramework
         public bool BlocksMovement { get => blocksMovement; set => blocksMovement = value; }
         public bool BlocksVision { get => blocksVision; set => blocksVision = value; }
 
-        private void Awake()
-        {
-            components = GetComponentsInChildren<AEntityComponent>();
-        }
-
-        private void OnDestroy()
-        {
-            if (Level != null && Level.Entities != null)
-            {
-                Level.Entities.Remove(this);
-            }
-        }
-
         public T GetEntityComponent<T>(bool includeDisabled = false) where T : AEntityComponent
         {
-            return Array.Find(components, c => c is T && (c.enabled || includeDisabled)) as T;
+            return Array.Find(Components, c => c is T && (c.enabled || includeDisabled)) as T;
         }
 
         public virtual void OnAddedToLevel(Level level)
         {
             Level = level;
 
-            foreach (var component in components)
+            foreach (var component in Components)
             {
                 component.OnLevelChanged();
             }
@@ -68,7 +64,7 @@ namespace RogueFramework
 
         public void Tick()
         {
-            foreach (var component in components)
+            foreach (var component in Components)
             {
                 component.OnTick();
             }
