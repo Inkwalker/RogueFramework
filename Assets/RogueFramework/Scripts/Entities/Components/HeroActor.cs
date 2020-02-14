@@ -61,6 +61,16 @@ namespace RogueFramework
                         action = new GrabAction(this, item);
                     }
                 }
+                else if (Input.GetKey(KeyCode.H))
+                {
+                    var inv = Entity.GetEntityComponent<Inventory>();
+                    if (inv!= null && inv.Count > 0)
+                    {
+                        var item = inv.Items[0];
+
+                        action = new ItemDropAction(this, item);
+                    }
+                }
                 else if (delta.HasValue)
                 {
                     var entity = Entity.Level.Entities.Get(Entity.Cell + delta.Value);

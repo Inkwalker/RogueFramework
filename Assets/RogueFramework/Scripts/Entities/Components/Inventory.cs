@@ -11,6 +11,7 @@ namespace RogueFramework
 
         public int Size => size;
         public int Count => items.Count;
+        public IReadOnlyList<Item> Items => items;
 
         private void Awake()
         {
@@ -20,18 +21,31 @@ namespace RogueFramework
             if (Count > Size) Debug.LogWarning("Inventory capacity exceeded");
         }
 
+        private void OnTransformChildrenChanged()
+        {
+            items.Clear();
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                var child = transform.GetChild(i);
+                var item = child.GetComponent<Item>();
+
+                if (item != null)
+                {
+                    item.Entity.transform.localPosition = Vector3.zero;
+                    item.Entity.gameObject.SetActive(false);
+
+                    items.Add(item);
+                }
+            }
+        }
+
         public bool Add(Item item, bool force = false)
         {
             if (!items.Contains(item))
             {
                 if (Count < Size || force)
                 {
-                    item.Entity.Level.Entities.Remove(item.Entity);
-
                     item.Entity.transform.SetParent(transform);
-                    item.Entity.transform.localPosition = Vector3.zero;
-
-                    item.Entity.gameObject.SetActive(false);
                 }
                 else return false;
             }
@@ -53,6 +67,11 @@ namespace RogueFramework
             }
 
             return false;
+        }
+
+        public bool Contains(Item item)
+        {
+            return items.Contains(item);
         }
 
         public bool Drop(Item item)
