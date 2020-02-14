@@ -25,11 +25,13 @@ namespace RogueFramework
         {
             get
             {
+                if (Level == null) return Vector2.zero;
                 Vector3 local = Level.Grid.WorldToLocal(transform.position);
                 return Level.Grid.LocalToCellInterpolated(local);
             }
             set
             {
+                if (Level == null) return;
                 var pos = Level.Grid.CellToLocalInterpolated(value);
                 transform.position = Level.Grid.LocalToWorld(pos);
             }
@@ -39,8 +41,14 @@ namespace RogueFramework
         {
             get
             {
+                if (Level == null) return Vector2Int.zero;
                 var gridPos = Level.Grid.WorldToCell(transform.position);
                 return new Vector2Int(gridPos.x, gridPos.y);
+            }
+            set
+            {
+                if (Level == null) return;
+                Position = value + new Vector2(0.5f, 0.5f);
             }
         }
         public Level Level { get; private set; }
