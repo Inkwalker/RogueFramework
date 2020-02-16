@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace RogueFramework
@@ -10,13 +9,18 @@ namespace RogueFramework
         [SerializeField] bool blocksMovement = true;
         [SerializeField] bool blocksVision = false;
 
-        private AEntityComponent[] components;
-        public AEntityComponent[] Components
+        private List<AEntityComponent> components;
+
+        public IReadOnlyList<AEntityComponent> Components
         {
             get
             {
                 if (components == null)
-                    components = GetComponentsInChildren<AEntityComponent>();
+                {
+                    components = new List<AEntityComponent>();
+                    GetEntityComponentsRecursively(gameObject, components);
+                }
+
                 return components;
             }
         }
@@ -55,9 +59,63 @@ namespace RogueFramework
         public bool BlocksMovement { get => blocksMovement; set => blocksMovement = value; }
         public bool BlocksVision { get => blocksVision; set => blocksVision = value; }
 
+        private void OnTransformChildrenChanged()
+        {
+            components.Clear();
+            GetEntityComponentsRecursively(gameObject, components);
+        }
+
         public T GetEntityComponent<T>(bool includeDisabled = false) where T : AEntityComponent
         {
-            return Array.Find(Components, c => c is T && (c.enabled || includeDisabled)) as T;
+            foreach (var item in Components)
+            {
+                if (item is T && (item.enabled || includeDisabled)) return item as T;
+            }
+
+            return null;
+        }
+
+        private T GetEntityComponentRecursively<T>(GameObject gameObject, bool includeDisabled) where T : AEntityComponent
+        {
+            var entity = gameObject.GetComponent<Entity>();
+            T component = null;
+
+            if (entity == null || entity == this)
+            {
+                component = gameObject.GetComponent<T>();
+
+                if (!component.enabled && !includeDisabled) component = null;
+
+                if (component == null)
+                {
+                    for (int i = 0; i < gameObject.transform.childCount; i++)
+                    {
+                        var child = gameObject.transform.GetChild(i).gameObject;
+                        component = GetEntityComponentRecursively<T>(child, includeDisabled);
+
+                        if (component != null) return component;
+                    }
+                }
+            }
+
+            return component;
+        }
+
+        private void GetEntityComponentsRecursively(GameObject gameObject, List<AEntityComponent> components)
+        {
+            var entity = gameObject.GetComponent<Entity>();
+
+            if (entity == null || entity == this)
+            {
+                var c = gameObject.GetComponents<AEntityComponent>();
+                components.AddRange(c);
+
+                for (int i = 0; i < gameObject.transform.childCount; i++)
+                {
+                    var child = gameObject.transform.GetChild(i).gameObject;
+                    GetEntityComponentsRecursively(child, components);
+                }
+            }
         }
 
         public virtual void OnAddedToLevel(Level level)
@@ -66,7 +124,8 @@ namespace RogueFramework
 
             foreach (var component in Components)
             {
-                component.OnLevelChanged();
+                if (component.enabled)
+                    component.OnLevelChanged();
             }
         }
 
@@ -74,7 +133,8 @@ namespace RogueFramework
         {
             foreach (var component in Components)
             {
-                component.OnTick();
+                if (component.enabled)
+                    component.OnTick();
             }
         }
     }
