@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: TestItem
   m_EditorClassIdentifier: 
   prefab: {fileID: 0}
+  icon: {fileID: 8496755748741757982, guid: 5db0d7400dbcf0e4f8fe61c8416cb681, type: 3}
+  displayName: TEST ITEM
