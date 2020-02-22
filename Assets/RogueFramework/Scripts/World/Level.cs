@@ -8,7 +8,7 @@ namespace RogueFramework
         public Grid Grid { get; private set; }
         public Map Map { get; private set; }
         public FieldOfView FoV { get; private set; }
-        public EntityList Entities { get; private set; }
+        public EntityIndex Entities { get; private set; }
 
         private void Awake()
         {
@@ -16,7 +16,13 @@ namespace RogueFramework
             Map  = GetComponentInChildren<Map>();
             FoV  = GetComponentInChildren<FieldOfView>();
 
-            Entities = new EntityList(this);
+            Entities = GetComponentInChildren<EntityIndex>();
+            if (Entities == null)
+            {
+                var entitiesObj = new GameObject("Entities");
+                entitiesObj.transform.SetParent(transform);
+                Entities = entitiesObj.AddComponent<EntityIndex>();
+            }
         }
 
         private void Start()

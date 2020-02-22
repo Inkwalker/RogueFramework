@@ -14,6 +14,14 @@ namespace RogueFramework
             return activeAction;
         }
 
+        private void OnDestroy()
+        {
+            if (activeAction != null && activeAction.WaitsResult)
+            {
+                activeAction.SetResult(null);
+            }
+        }
+
         private void Update()
         {
             if (activeAction != null && activeAction.WaitsResult)
@@ -21,32 +29,53 @@ namespace RogueFramework
 
                 Vector2Int? delta = null;
 
-                if (Input.GetKey(KeyCode.LeftArrow))
+                if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
                 {
                     delta = Vector2Int.left;
                 }
 
-                if (Input.GetKey(KeyCode.RightArrow))
+                if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
                 {
                     delta = Vector2Int.right;
                 }
 
-                if (Input.GetKey(KeyCode.UpArrow))
+                if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
                 {
                     delta = Vector2Int.up;
                 }
 
-                if (Input.GetKey(KeyCode.DownArrow))
+                if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
                 {
                     delta = Vector2Int.down;
                 }
 
-                if (delta.HasValue)
+
+                ActorAction action = null;
+
+                if (Input.GetKey(KeyCode.G))
+                {
+                    var item = Entity.Level.Entities.Get<Item>(Entity.Cell);
+
+                    if (item != null)
+                    {
+                        action = new GrabAction(this, item);
+                    }
+                }
+                else if (Input.GetKey(KeyCode.H))
+                {
+                    var inv = Entity.GetEntityComponent<Inventory>();
+                    if (inv!= null && inv.Count > 0)
+                    {
+                        var item = inv.Items[0];
+
+                        action = new ItemDropAction(this, item);
+                    }
+                }
+                else if (delta.HasValue)
                 {
                     var entity = Entity.Level.Entities.Get(Entity.Cell + delta.Value);
                     var interactable = entity?.GetEntityComponent<Interactable>();
 
-                    ActorAction action;
                     if (interactable != null)
                     {
                         action = new InteractAction(this, interactable);
@@ -55,7 +84,10 @@ namespace RogueFramework
                     {
                         action = new WalkAction(this, delta.Value);
                     }
+                }
 
+                if (action != null)
+                {
                     activeAction.SetResult(action.Perform());
                 }
             }
