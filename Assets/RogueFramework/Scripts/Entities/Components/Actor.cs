@@ -32,5 +32,12 @@ namespace RogueFramework
         {
             AddEnergy(speed);
         }
+
+        protected AEntityAbility GetAbility(AbilitySignature signature)
+        {
+            var abilities = GetComponentsInChildren<AEntityAbility>();
+
+            return System.Array.Find(abilities, a => a.Signature == signature);
+        }
     }
 }

@@ -134,6 +134,20 @@ namespace RogueFramework
             return entities.FindAll(entity => entity.Cell == position);
         }
 
+        public List<T> GetAll<T>(Vector2Int position) where T : AEntityComponent
+        {
+            var result = new List<T>();
+
+            foreach (var entity in entities)
+            {
+                T c = entity.GetEntityComponent<T>();
+
+                if (c != null) result.Add(c);
+            }
+
+            return result;
+        }
+
         public bool IsWalkable(Vector2Int position)
         {
             var entity = Get(position);
