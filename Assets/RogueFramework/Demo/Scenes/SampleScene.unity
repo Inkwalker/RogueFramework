@@ -212,7 +212,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
-  moveAbility: {fileID: 43539585}
 --- !u!114 &119572139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236,6 +235,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 120505380}
+  - component: {fileID: 120505381}
   m_Layer: 0
   m_Name: Abilities
   m_TagString: Untagged
@@ -258,6 +258,18 @@ Transform:
   m_Father: {fileID: 119572137}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &120505381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 120505379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e830ad2fb945e704094907c5555494d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &219992777
 GameObject:
   m_ObjectHideFlags: 0
@@ -1552,10 +1564,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 4
-  takeItemAbility: {fileID: 1137715973}
-  dropItemAbility: {fileID: 2110309522}
-  moveAbility: {fileID: 1113511720}
-  interactAbility: {fileID: 219992779}
 --- !u!114 &1205932859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4459,6 +4467,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1583718125}
+  - component: {fileID: 1583718126}
   m_Layer: 0
   m_Name: Abilities
   m_TagString: Untagged
@@ -4484,6 +4493,18 @@ Transform:
   m_Father: {fileID: 1205932856}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1583718126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1583718124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e830ad2fb945e704094907c5555494d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1979497728
 GameObject:
   m_ObjectHideFlags: 0

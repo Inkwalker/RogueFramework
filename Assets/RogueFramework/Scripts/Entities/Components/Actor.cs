@@ -35,9 +35,16 @@ namespace RogueFramework
 
         protected AEntityAbility GetAbility(AbilitySignature signature)
         {
-            var abilities = GetComponentsInChildren<AEntityAbility>();
+            var containers = Entity.GetEntityComponents<AbilitiesContainer>();
 
-            return System.Array.Find(abilities, a => a.Signature == signature);
+            foreach (var container in containers)
+            {
+                var ability = container.Get(signature);
+
+                if (ability != null) return ability;
+            }
+
+            return null;
         }
     }
 }
