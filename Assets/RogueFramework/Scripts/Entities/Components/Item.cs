@@ -9,5 +9,7 @@ namespace RogueFramework
 
         public ItemType Type => type;
         public int Quantity { get; set; }
+
+        public bool InInventory => Entity.Level == null;
     }
 }

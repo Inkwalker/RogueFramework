@@ -9,7 +9,11 @@ namespace RogueFramework
 
         public override bool CanPerform(Entity target)
         {
-            return base.CanPerform(target) && target.BlocksMovement == false;
+            return 
+                base.CanPerform(target) &&
+                target.Level != null &&
+                target.Level == Owner.Level && 
+                target.BlocksMovement == false;
         }
 
         public override bool CanPerform(Vector2Int tile)

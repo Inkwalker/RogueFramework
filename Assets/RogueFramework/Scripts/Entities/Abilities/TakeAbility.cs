@@ -11,12 +11,17 @@ namespace RogueFramework
 
         public override bool CanPerform(Entity target)
         {
-            return base.CanPerform(target) && target.GetEntityComponent<Item>() != null;
+            var item = target.GetEntityComponent<Item>();
+
+            return
+                base.CanPerform(target) &&
+                item != null &&
+                item.InInventory == false;
         }
 
         public override bool CanPerform(Vector2Int tile)
         {
-            return base.CanPerform(tile) && Owner.Level.Entities.Get<Item>(tile) != null;
+            return base.CanPerform(tile) && Owner.Level?.Entities.Get<Item>(tile) != null;
         }
 
         protected override ActorActionResult OnPerform(Entity target, Vector2Int tile)
