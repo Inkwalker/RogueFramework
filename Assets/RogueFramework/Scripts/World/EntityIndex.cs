@@ -119,6 +119,7 @@ namespace RogueFramework
 
         public T Get<T>(Vector2Int position) where T : AEntityComponent
         {
+            var entities = GetAll(position);
             foreach (var entity in entities)
             {
                 T c = entity.GetEntityComponent<T>();

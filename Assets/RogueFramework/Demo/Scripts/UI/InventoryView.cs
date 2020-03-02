@@ -11,6 +11,11 @@ namespace RogueFramework.Demo
         private Inventory target;
         private Item selectedItem;
 
+        private void OnEnable()
+        {
+            actionPanel.Hide();
+        }
+
         public void SetTarget(Inventory inventory)
         {
             target = inventory;
