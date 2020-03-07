@@ -543,7 +543,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &263548220
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1443,6 +1443,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: 12
+  OnItemAdded:
+    m_PersistentCalls:
+      m_Calls: []
+  OnItemRemoved:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &993681475
 GameObject:
   m_ObjectHideFlags: 0
@@ -2032,6 +2038,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slots:
   - {fileID: 11400000, guid: 61be3adc029202c49b95c7b7906cad41, type: 2}
+  OnEquipped:
+    m_PersistentCalls:
+      m_Calls: []
+  OnUnequipped:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1377394789
 GameObject:
   m_ObjectHideFlags: 0

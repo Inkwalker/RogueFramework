@@ -1,6 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace RogueFramework
@@ -10,6 +9,7 @@ namespace RogueFramework
         [SerializeField] EquipmentSlot[] slots;
 
         private List<Item> equipped = new List<Item>();
+        private TransformChildrenTracker tracker;
 
         public IReadOnlyList<Item> Equipped => equipped;
 
@@ -20,40 +20,24 @@ namespace RogueFramework
         {
             var children = GetComponentsInChildren<Item>();
             equipped.AddRange(children);
+
+            tracker = GetComponent<TransformChildrenTracker>();
+            if (tracker == null)
+            {
+                tracker = gameObject.AddComponent<TransformChildrenTracker>();
+                tracker.hideFlags = HideFlags.HideInInspector;
+            }
+
+            tracker.OnChildAdded.AddListener(OnChildAdded);
+            tracker.OnChildRemoved.AddListener(OnChildRemoved);
         }
 
-        private void OnTransformChildrenChanged()
+        private void OnDestroy()
         {
-            var newEquippedList = new List<Item>();
-            var addedEquipment = new List<Item>();
-
-            for (int i = 0; i < transform.childCount; i++)
+            if (tracker)
             {
-                var child = transform.GetChild(i);
-                var item = child.GetComponent<Item>();
-
-                if (item != null)
-                {
-                    if (!equipped.Remove(item))
-                    {
-                        item.Entity.transform.localPosition = Vector3.zero;
-                        item.Entity.gameObject.SetActive(true);
-
-                        addedEquipment.Add(item);
-                    }
-                    newEquippedList.Add(item);
-                }
-            }
-
-            equipped = newEquippedList;
-
-            foreach (var item in equipped)
-            {
-                OnUnequipped.Invoke(item);
-            }
-            foreach (var item in addedEquipment)
-            {
-                OnEquipped.Invoke(item);
+                tracker.OnChildAdded.RemoveListener(OnChildAdded);
+                tracker.OnChildRemoved.RemoveListener(OnChildRemoved);
             }
         }
 
@@ -76,7 +60,7 @@ namespace RogueFramework
 
         public bool Remove(Item item)
         {
-            if (equipped.Remove(item))
+            if (equipped.Contains(item))
             {
                 item.Entity.transform.SetParent(null);
                 return true;
@@ -88,6 +72,31 @@ namespace RogueFramework
         public bool Contains(Item item)
         {
             return equipped.Contains(item);
+        }
+
+
+        private void OnChildAdded(Transform child)
+        {
+            var item = child.GetComponent<Item>();
+
+            if (item != null && !equipped.Contains(item))
+            {
+                item.Entity.transform.localPosition = Vector3.zero;
+                item.Entity.gameObject.SetActive(true);
+
+                equipped.Add(item);
+
+                OnEquipped.Invoke(item);
+            }
+        }
+
+        private void OnChildRemoved(Transform child)
+        {
+            var item = child.GetComponent<Item>();
+            if (item != null && equipped.Remove(item))
+            {
+                OnUnequipped.Invoke(item);
+            }
         }
 
         [System.Serializable] public class EquipmentEvent : UnityEvent<Item> { }

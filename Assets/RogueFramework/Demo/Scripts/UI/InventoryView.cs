@@ -16,9 +16,27 @@ namespace RogueFramework.Demo
             actionPanel.Hide();
         }
 
+        private void OnDisable()
+        {
+            if (target != null)
+            {
+                target.OnItemAdded.RemoveListener(OnInventoryChanged);
+                target.OnItemRemoved.RemoveListener(OnInventoryChanged);
+            }
+        }
+
         public void SetTarget(Inventory inventory)
         {
+            if (target != null)
+            {
+                target.OnItemAdded.RemoveListener(OnInventoryChanged);
+                target.OnItemRemoved.RemoveListener(OnInventoryChanged);
+            }
+
             target = inventory;
+
+            target.OnItemAdded.AddListener(OnInventoryChanged);
+            target.OnItemRemoved.AddListener(OnInventoryChanged);
 
             CreateItemViews();
         }
@@ -62,14 +80,17 @@ namespace RogueFramework.Demo
             if (ability != null && selectedItem != null)
             {
                 ability.Perform(selectedItem.Entity);
-
-                CreateItemViews();
             }
 
             selectedItem = null;
 
             actionPanel.Hide();
             actionPanel.onActionSelected.RemoveListener(OnActionSelected);
+        }
+
+        private void OnInventoryChanged(Item item)
+        {
+            CreateItemViews();
         }
     }
 }
