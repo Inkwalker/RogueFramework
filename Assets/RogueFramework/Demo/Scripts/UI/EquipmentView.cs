@@ -2,13 +2,13 @@
 
 namespace RogueFramework.Demo
 {
-    public class InventoryView : MonoBehaviour
+    public class EquipmentView : MonoBehaviour
     {
         [SerializeField] ItemView itemViewPrefab = null;
         [SerializeField] Transform content = null;
         [SerializeField] ActionsView actionPanel = null;
 
-        private Inventory target;
+        private Equipment target;
         private Item selectedItem;
 
         private void OnEnable()
@@ -16,9 +16,27 @@ namespace RogueFramework.Demo
             actionPanel.Hide();
         }
 
-        public void SetTarget(Inventory inventory)
+        private void OnDisable()
         {
-            target = inventory;
+            if (target != null)
+            {
+                target.OnEquipped.RemoveListener(OnEquipmentChanged);
+                target.OnUnequipped.RemoveListener(OnEquipmentChanged);
+            }
+        }
+
+        public void SetTarget(Equipment equipment)
+        {
+            if (target != null)
+            {
+                target.OnEquipped.RemoveListener(OnEquipmentChanged);
+                target.OnUnequipped.RemoveListener(OnEquipmentChanged);
+            }
+
+            target = equipment;
+
+            target.OnEquipped.AddListener(OnEquipmentChanged);
+            target.OnUnequipped.AddListener(OnEquipmentChanged);
 
             CreateItemViews();
         }
@@ -32,7 +50,7 @@ namespace RogueFramework.Demo
 
             if (target != null)
             {
-                foreach (var item in target.Items)
+                foreach (var item in target.Equipped)
                 {
                     var itemView = Instantiate(itemViewPrefab, content);
 
@@ -70,6 +88,18 @@ namespace RogueFramework.Demo
 
             actionPanel.Hide();
             actionPanel.onActionSelected.RemoveListener(OnActionSelected);
+        }
+
+        private void OnEquipmentChanged(Item item)
+        {
+            CreateItemViews();
+
+            if (selectedItem == item)
+            {
+                selectedItem = null;
+                actionPanel.Hide();
+                actionPanel.onActionSelected.RemoveListener(OnActionSelected);
+            }
         }
     }
 }

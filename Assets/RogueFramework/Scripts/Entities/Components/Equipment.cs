@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Events;
 
 namespace RogueFramework
 {
@@ -12,6 +13,9 @@ namespace RogueFramework
 
         public IReadOnlyList<Item> Equipped => equipped;
 
+        public EquipmentEvent OnEquipped;
+        public EquipmentEvent OnUnequipped;
+
         private void Awake()
         {
             var children = GetComponentsInChildren<Item>();
@@ -20,7 +24,9 @@ namespace RogueFramework
 
         private void OnTransformChildrenChanged()
         {
-            equipped.Clear();
+            var newEquippedList = new List<Item>();
+            var addedEquipment = new List<Item>();
+
             for (int i = 0; i < transform.childCount; i++)
             {
                 var child = transform.GetChild(i);
@@ -28,11 +34,26 @@ namespace RogueFramework
 
                 if (item != null)
                 {
-                    item.Entity.transform.localPosition = Vector3.zero;
-                    item.Entity.gameObject.SetActive(true);
+                    if (!equipped.Remove(item))
+                    {
+                        item.Entity.transform.localPosition = Vector3.zero;
+                        item.Entity.gameObject.SetActive(true);
 
-                    equipped.Add(item);
+                        addedEquipment.Add(item);
+                    }
+                    newEquippedList.Add(item);
                 }
+            }
+
+            equipped = newEquippedList;
+
+            foreach (var item in equipped)
+            {
+                OnUnequipped.Invoke(item);
+            }
+            foreach (var item in addedEquipment)
+            {
+                OnEquipped.Invoke(item);
             }
         }
 
@@ -68,5 +89,7 @@ namespace RogueFramework
         {
             return equipped.Contains(item);
         }
+
+        [System.Serializable] public class EquipmentEvent : UnityEvent<Item> { }
     }
 }
