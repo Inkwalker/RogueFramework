@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace RogueFramework
 {
@@ -31,6 +32,39 @@ namespace RogueFramework
         public override void OnTick()
         {
             AddEnergy(speed);
+        }
+
+        protected AEntityAbility GetAbility(AbilitySignature signature)
+        {
+            var containers = Entity.GetEntityComponents<EntityAbilities>();
+
+            foreach (var container in containers)
+            {
+                var ability = container.Get(signature);
+
+                if (ability != null) return ability;
+            }
+
+            return null;
+        }
+
+        public List<AEntityAbility> GetApplicableAbilities(Entity target)
+        {
+            var result = new List<AEntityAbility>();
+            var containers = Entity.GetEntityComponents<EntityAbilities>();
+
+            foreach (var container in containers)
+            {
+                foreach (var ability in container.Abilities)
+                {
+                    if (ability.CanPerform(this, target))
+                    {
+                        result.Add(ability);
+                    }
+                }
+            }
+
+            return result;
         }
     }
 }

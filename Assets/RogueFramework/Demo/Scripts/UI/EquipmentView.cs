@@ -2,13 +2,13 @@
 
 namespace RogueFramework.Demo
 {
-    public class InventoryView : MonoBehaviour
+    public class EquipmentView : MonoBehaviour
     {
         [SerializeField] ItemView itemViewPrefab = null;
         [SerializeField] Transform content = null;
         [SerializeField] ActionsView actionPanel = null;
 
-        private Inventory target;
+        private Equipment target;
         private Item selectedItem;
 
         private void OnEnable()
@@ -20,23 +20,23 @@ namespace RogueFramework.Demo
         {
             if (target != null)
             {
-                target.OnItemAdded.RemoveListener(OnInventoryChanged);
-                target.OnItemRemoved.RemoveListener(OnInventoryChanged);
+                target.OnEquipped.RemoveListener(OnEquipmentChanged);
+                target.OnUnequipped.RemoveListener(OnEquipmentChanged);
             }
         }
 
-        public void SetTarget(Inventory inventory)
+        public void SetTarget(Equipment equipment)
         {
             if (target != null)
             {
-                target.OnItemAdded.RemoveListener(OnInventoryChanged);
-                target.OnItemRemoved.RemoveListener(OnInventoryChanged);
+                target.OnEquipped.RemoveListener(OnEquipmentChanged);
+                target.OnUnequipped.RemoveListener(OnEquipmentChanged);
             }
 
-            target = inventory;
+            target = equipment;
 
-            target.OnItemAdded.AddListener(OnInventoryChanged);
-            target.OnItemRemoved.AddListener(OnInventoryChanged);
+            target.OnEquipped.AddListener(OnEquipmentChanged);
+            target.OnUnequipped.AddListener(OnEquipmentChanged);
 
             CreateItemViews();
         }
@@ -50,7 +50,7 @@ namespace RogueFramework.Demo
 
             if (target != null)
             {
-                foreach (var item in target.Items)
+                foreach (var item in target.Equipped)
                 {
                     var itemView = Instantiate(itemViewPrefab, content);
 
@@ -88,9 +88,16 @@ namespace RogueFramework.Demo
             actionPanel.onActionSelected.RemoveListener(OnActionSelected);
         }
 
-        private void OnInventoryChanged(Item item)
+        private void OnEquipmentChanged(Item item)
         {
             CreateItemViews();
+
+            if (selectedItem == item)
+            {
+                selectedItem = null;
+                actionPanel.Hide();
+                actionPanel.onActionSelected.RemoveListener(OnActionSelected);
+            }
         }
     }
 }

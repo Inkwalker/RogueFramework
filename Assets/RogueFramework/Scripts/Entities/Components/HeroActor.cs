@@ -49,46 +49,54 @@ namespace RogueFramework
                     delta = Vector2Int.down;
                 }
 
-
-                ActorAction action = null;
-
                 if (Input.GetKey(KeyCode.G))
                 {
-                    var item = Entity.Level.Entities.Get<Item>(Entity.Cell);
+                    var ability = GetAbility(AbilitySignature.ItemTake);
 
-                    if (item != null)
+                    if (ability != null)
                     {
-                        action = new GrabAction(this, item);
+                        var item = Entity.Level.Entities.Get<Item>(Entity.Cell);
+
+                        if (item != null && ability.CanPerform(this, item.Entity))
+                        {
+                            var result = ability.Perform(this, item.Entity);
+                            activeAction.SetResult(result);
+                        }
                     }
                 }
                 else if (Input.GetKey(KeyCode.H))
                 {
-                    var inv = Entity.GetEntityComponent<Inventory>();
-                    if (inv!= null && inv.Count > 0)
-                    {
-                        var item = inv.Items[0];
+                    var ability = GetAbility(AbilitySignature.ItemDrop);
 
-                        action = new ItemDropAction(this, item);
+                    if (ability != null)
+                    {
+                        var inv = Entity.GetEntityComponent<Inventory>();
+                        if (inv != null && inv.Count > 0)
+                        {
+                            var item = inv.Items[0];
+
+                            var result = ability.Perform(this, item.Entity);
+                            activeAction.SetResult(result);
+                        }
                     }
                 }
                 else if (delta.HasValue)
                 {
                     var entity = Entity.Level.Entities.Get(Entity.Cell + delta.Value);
-                    var interactable = entity?.GetEntityComponent<Interactable>();
 
-                    if (interactable != null)
-                    {
-                        action = new InteractAction(this, interactable);
-                    }
-                    else
-                    {
-                        action = new WalkAction(this, delta.Value);
-                    }
-                }
+                    var interact = GetAbility(AbilitySignature.Interaction);
+                    var move     = GetAbility(AbilitySignature.Move);
 
-                if (action != null)
-                {
-                    activeAction.SetResult(action.Perform());
+                    if (interact != null && interact.CanPerform(this, entity))
+                    {
+                        var result = interact.Perform(this, entity);
+                        activeAction.SetResult(result);
+                    }
+                    else if (move != null)
+                    {
+                        var result = move.Perform(this, Entity.Cell + delta.Value);
+                        activeAction.SetResult(result);
+                    }                    
                 }
             }
         }

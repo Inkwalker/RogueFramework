@@ -18,7 +18,7 @@ namespace RogueFramework
                 if (components == null)
                 {
                     components = new List<AEntityComponent>();
-                    GetEntityComponentsRecursively(gameObject, components);
+                    SearchEntityComponents();
                 }
 
                 return components;
@@ -61,8 +61,7 @@ namespace RogueFramework
 
         private void OnTransformChildrenChanged()
         {
-            components.Clear();
-            GetEntityComponentsRecursively(gameObject, components);
+            SearchEntityComponents();
         }
 
         public T GetEntityComponent<T>(bool includeDisabled = false) where T : AEntityComponent
@@ -73,6 +72,18 @@ namespace RogueFramework
             }
 
             return null;
+        }
+
+        public List<T> GetEntityComponents<T>(bool includeDisabled = false) where T : AEntityComponent
+        {
+            var result = new List<T>();
+
+            foreach(var item in Components)
+            {
+                if (item is T && (item.enabled || includeDisabled)) result.Add(item as T);
+            }
+
+            return result;
         }
 
         private T GetEntityComponentRecursively<T>(GameObject gameObject, bool includeDisabled) where T : AEntityComponent
@@ -136,6 +147,14 @@ namespace RogueFramework
                 if (component.enabled)
                     component.OnTick();
             }
+        }
+
+        public void SearchEntityComponents()
+        {
+            if (components == null) components = new List<AEntityComponent>();
+
+            components.Clear();
+            GetEntityComponentsRecursively(gameObject, components);
         }
     }
 }

@@ -5,9 +5,11 @@ namespace RogueFramework
 {
     public class Item : AEntityComponent
     {
-        [SerializeField] ItemType type;
+        [SerializeField] ItemType type = default;
 
         public ItemType Type => type;
         public int Quantity { get; set; }
+
+        public bool InInventory => Entity.Level == null;
     }
 }

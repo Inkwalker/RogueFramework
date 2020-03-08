@@ -7,24 +7,23 @@ namespace RogueFramework.Demo
         private static GameUI instance;
         private static GameUI Instance { get { if (instance == null) instance = FindObjectOfType<GameUI>(); return instance;  } }
 
-        [SerializeField] InventoryView inventoryView = null;
+        [SerializeField] CharacterPanel characterView = null;
 
-        public static void ShowInventory(Inventory target)
+        public static void ShowCharacter(Entity target)
         {
             if (target != null)
             {
-                Instance.inventoryView.SetTarget(target);
-                Instance.inventoryView.gameObject.SetActive(true);
+                Instance.characterView.Show(target);
             }
             else
             {
-                Instance.inventoryView.gameObject.SetActive(false);
+                Instance.characterView.Hide();
             }
         }
 
         public static void CloseAll()
         {
-            Instance.inventoryView.gameObject.SetActive(false);
+            Instance.characterView.Hide();
         }
 
         private void Start()
@@ -36,16 +35,15 @@ namespace RogueFramework.Demo
         {
             if (Input.GetKeyDown(KeyCode.I))
             {
-                if (Instance.inventoryView.gameObject.activeSelf)
+                if (Instance.characterView.gameObject.activeSelf)
                 {
-                    Instance.inventoryView.gameObject.SetActive(false);
+                    Instance.characterView.Hide();
                 }
                 else
                 {
                     var hero = FindObjectOfType<HeroActor>();
-                    var inv = hero?.Entity.GetEntityComponent<Inventory>();
 
-                    ShowInventory(inv);
+                    ShowCharacter(hero?.Entity);
                 }
             }
         }

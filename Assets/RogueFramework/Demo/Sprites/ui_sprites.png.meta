@@ -5,6 +5,9 @@ TextureImporter:
   - first:
       213: 5868725777427214606
     second: ui_panel
+  - first:
+      213: 3382373700606424769
+    second: ui_divider
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -133,7 +136,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 5, y: 5, z: 5, w: 5}
       outline: []
       physicsShape: []
@@ -141,6 +144,27 @@ TextureImporter:
       bones: []
       spriteID: 3414a655ea0438842a275d090f5ebf21
       internalID: 5868725777427214606
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_divider
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 118
+        width: 16
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 5, y: 0, z: 5, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c6f44ac5fa90fe20800000000000000
+      internalID: 3382373700606424769
       vertices: []
       indices: 
       edges: []

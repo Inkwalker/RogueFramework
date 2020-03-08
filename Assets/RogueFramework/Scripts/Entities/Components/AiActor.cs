@@ -28,14 +28,16 @@ namespace RogueFramework
 
         public override ActorActionResult TakeTurn()
         {
-            if (target != null)
+            var move = GetAbility(AbilitySignature.Move);
+
+            if (target != null && move != null)
             {
                 if (MapUtils.IsNeighborCells(target.Entity.Cell, Entity.Cell) == false)
                 {
                     var dir = target.Entity.Cell - Entity.Cell;
                     var delta = MapUtils.To4Dir(dir);
 
-                    return new WalkAction(this, delta).Perform();
+                    return move.Perform(this, Entity.Cell + delta);
                 }
             }
 

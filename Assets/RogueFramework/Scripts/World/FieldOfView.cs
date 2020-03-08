@@ -15,6 +15,7 @@ namespace RogueFramework
         private Tilemap tilemap;
         private HashSet<Vector2Int> exploredTiles;
         private HashSet<Vector2Int> visibleTiles;
+        private HashSet<Vector2Int> dirty;
 
         private void Awake()
         {
@@ -22,27 +23,35 @@ namespace RogueFramework
 
             exploredTiles = new HashSet<Vector2Int>();
             visibleTiles  = new HashSet<Vector2Int>();
+            dirty         = new HashSet<Vector2Int>();
         }
 
         private void Start()
         {
-            UpdateTiles();
+            RebuildTilemap();
         }
 
         public void ClearFog()
         {
+            dirty.UnionWith(visibleTiles);
+
             visibleTiles.Clear();
             UpdateTiles();
         }
 
         public void ClearExplored()
         {
+            dirty.UnionWith(exploredTiles);
+
             exploredTiles.Clear();
             UpdateTiles();
         }
 
         public void Clear()
         {
+            dirty.UnionWith(visibleTiles);
+            dirty.UnionWith(exploredTiles);
+
             visibleTiles.Clear();
             exploredTiles.Clear();
             UpdateTiles();
@@ -105,7 +114,24 @@ namespace RogueFramework
 
         private void UpdateTiles()
         {
-            tilemap.ClearAllTiles();
+            foreach (var cell in dirty)
+            {
+                var mapTile = level.Map.Get(cell);
+
+                bool explored = exploredTiles.Contains(cell);
+                bool visible = visibleTiles.Contains(cell);
+
+                if (mapTile != null)
+                {
+                    SetTile(cell, visible, explored);
+                }
+            }
+
+            dirty.Clear();
+        }
+
+        public void RebuildTilemap()
+        {
             var bounds = level.Map.Bounds;
 
             for (int y = bounds.yMin; y < bounds.yMax; y++)
