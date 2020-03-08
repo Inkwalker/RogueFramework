@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace RogueFramework
 {
-    public class EquipAbility : AEntityAbility
+    public class UnequipAbility : AEntityAbility
     {
         public override AbilitySignature Signature => AbilitySignature.Undefined;
 
@@ -15,9 +15,8 @@ namespace RogueFramework
             return
                 base.CanPerform(user, target) &&
                 item != null &&
-                item.Type.Equippable &&
                 equipment != null &&
-                equipment.Contains(item) == false;
+                equipment.Contains(item);
         }
 
         public override bool CanPerform(Actor user, Vector2Int tile)
@@ -31,24 +30,34 @@ namespace RogueFramework
 
             if (targetItem == null)
             {
-                Debug.Log($"Can't equip item at {targetTile}. No item found.");
+                Debug.Log($"Can't equip item at {targetTile}. Item have to be equipped.");
                 return null;
             }
 
-            if (targetItem.Type.Equippable)
-            {
-                var equipment = user.Entity.GetEntityComponent<Equipment>();
+            var equipment = user.Entity.GetEntityComponent<Equipment>();
 
-                if (equipment != null)
+            if (equipment != null)
+            {
+                Debug.Log($"Unequipping item {targetEntity.name}");
+                equipment.Remove(targetItem);
+
+                var inv = user.Entity.GetEntityComponent<Inventory>();
+
+                if (inv && inv.Add(targetItem))
                 {
-                    Debug.Log($"Equipping item {targetEntity.name}");
-                    equipment.Add(targetItem);
                 }
                 else
                 {
-                    Debug.Log($"Can't equip item {targetEntity.name}. Actor doesn't have an equipment component");
+                    Debug.Log($"Item {targetEntity.name} dropped.");
+                    user.Entity.Level.Entities.Add(targetEntity);
+                    targetEntity.Cell = user.Entity.Cell;
                 }
             }
+            else
+            {
+                Debug.Log($"Can't unequip item {targetEntity.name}. Actor doesn't have an equipment component");
+            }
+            
 
             return null;
         }
