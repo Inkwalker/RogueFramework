@@ -37,7 +37,7 @@ namespace RogueFramework
                     var dir = target.Entity.Cell - Entity.Cell;
                     var delta = MapUtils.To4Dir(dir);
 
-                    return move.Perform(Entity.Cell + delta);
+                    return move.Perform(this, Entity.Cell + delta);
                 }
             }
 

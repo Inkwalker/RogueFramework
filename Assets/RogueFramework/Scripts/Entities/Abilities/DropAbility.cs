@@ -9,22 +9,22 @@ namespace RogueFramework
     {
         public override AbilitySignature Signature => AbilitySignature.ItemDrop;
 
-        public override bool CanPerform(Entity target)
+        public override bool CanPerform(Actor user, Entity target)
         {
-            var inv = Owner?.GetEntityComponent<Inventory>();
+            var inv = user?.Entity.GetEntityComponent<Inventory>();
             var item = target?.GetEntityComponent<Item>();
 
-            return base.CanPerform(target) && inv != null && item != null && inv.Contains(item);
+            return base.CanPerform(user, target) && inv != null && item != null && inv.Contains(item);
         }
 
-        public override bool CanPerform(Vector2Int tile)
+        public override bool CanPerform(Actor user, Vector2Int tile)
         {
             return false;
         }
 
-        protected override ActorActionResult OnPerform(Entity targetEntity, Vector2Int targetTile)
+        protected override ActorActionResult OnPerform(Actor user, Entity targetEntity, Vector2Int targetTile)
         {
-            var inventory = Owner.GetEntityComponent<Inventory>();
+            var inventory = user.Entity.GetEntityComponent<Inventory>();
             var item = targetEntity.GetEntityComponent<Item>();
 
             if (inventory != null && item != null)

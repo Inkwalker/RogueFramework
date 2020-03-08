@@ -9,28 +9,28 @@ namespace RogueFramework
     {
         public override AbilitySignature Signature => AbilitySignature.ItemTake;
 
-        public override bool CanPerform(Entity target)
+        public override bool CanPerform(Actor user, Entity target)
         {
             var item = target.GetEntityComponent<Item>();
 
             return
-                base.CanPerform(target) &&
+                base.CanPerform(user, target) &&
                 item != null &&
                 item.InInventory == false;
         }
 
-        public override bool CanPerform(Vector2Int tile)
+        public override bool CanPerform(Actor user, Vector2Int tile)
         {
-            return base.CanPerform(tile) && Owner.Level?.Entities.Get<Item>(tile) != null;
+            return base.CanPerform(user, tile) && user.Entity.Level?.Entities.Get<Item>(tile) != null;
         }
 
-        protected override ActorActionResult OnPerform(Entity target, Vector2Int tile)
+        protected override ActorActionResult OnPerform(Actor user, Entity target, Vector2Int tile)
         {
             Item targetItem = null;
 
             if (target == null)
             {
-                targetItem = Owner.Level.Entities.Get<Item>(tile);
+                targetItem = user.Entity.Level.Entities.Get<Item>(tile);
             }
             else
             {
@@ -43,12 +43,12 @@ namespace RogueFramework
                 return null;
             }
 
-            Vector2Int actorCell = Owner.Cell;
+            Vector2Int actorCell = user.Entity.Cell;
             Vector2Int itemCell  = targetItem.Entity.Cell;
 
             if (actorCell == itemCell || MapUtils.IsNeighborCells(actorCell, itemCell))
             {
-                var inv = Owner.GetEntityComponent<Inventory>();
+                var inv = user.Entity.GetEntityComponent<Inventory>();
 
                 if (inv != null)
                 {

@@ -79,9 +79,7 @@ namespace RogueFramework.Demo
         {
             if (ability != null && selectedItem != null)
             {
-                ability.Perform(selectedItem.Entity);
-
-                CreateItemViews();
+                ability.Perform(target.Entity.GetEntityComponent<Actor>(), selectedItem.Entity);
             }
 
             selectedItem = null;

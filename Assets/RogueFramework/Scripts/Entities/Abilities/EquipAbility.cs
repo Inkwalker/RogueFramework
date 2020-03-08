@@ -7,19 +7,19 @@ namespace RogueFramework
     {
         public override AbilitySignature Signature => AbilitySignature.Undefined;
 
-        public override bool CanPerform(Entity target)
+        public override bool CanPerform(Actor user, Entity target)
         {
             var item = target?.GetEntityComponent<Item>();
 
-            return base.CanPerform(target) && item != null && item.Type.Equippable;
+            return base.CanPerform(user, target) && item != null && item.Type.Equippable;
         }
 
-        public override bool CanPerform(Vector2Int tile)
+        public override bool CanPerform(Actor user, Vector2Int tile)
         {
             return false;
         }
 
-        protected override ActorActionResult OnPerform(Entity targetEntity, Vector2Int targetTile)
+        protected override ActorActionResult OnPerform(Actor user, Entity targetEntity, Vector2Int targetTile)
         {
             Item targetItem = targetEntity.GetEntityComponent<Item>(); 
 
@@ -31,7 +31,7 @@ namespace RogueFramework
 
             if (targetItem.Type.Equippable)
             {
-                var equipment = Owner.GetEntityComponent<Equipment>();
+                var equipment = user.Entity.GetEntityComponent<Equipment>();
 
                 if (equipment != null)
                 {

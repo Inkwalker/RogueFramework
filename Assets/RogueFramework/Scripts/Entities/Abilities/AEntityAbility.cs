@@ -28,36 +28,36 @@ namespace RogueFramework
 
         protected virtual void OnOwnerChanged() { }
 
-        public virtual bool CanPerform(Entity target)
+        public virtual bool CanPerform(Actor user, Entity target)
         {
-            return Owner != null && target != null;
+            return user != null && Owner != null && target != null;
         }
-        public virtual bool CanPerform(Vector2Int tile)
+        public virtual bool CanPerform(Actor user, Vector2Int tile)
         {
-            return Owner != null;
+            return user != null && Owner != null;
         }
 
-        public ActorActionResult Perform(Entity target)
+        public ActorActionResult Perform(Actor user, Entity target)
         {
-            if (CanPerform(target))
+            if (CanPerform(user, target))
             {
-                Actor.Energy -= Cost;
-                return OnPerform(target, target.Cell);
+                user.Energy -= Cost;
+                return OnPerform(user, target, target.Cell);
             }
 
             return null;
         }
-        public ActorActionResult Perform(Vector2Int tile)
+        public ActorActionResult Perform(Actor user, Vector2Int tile)
         {
-            if (CanPerform(tile))
+            if (CanPerform(user, tile))
             {
-                Actor.Energy -= Cost;
-                return OnPerform(null, tile);
+                user.Energy -= Cost;
+                return OnPerform(user, null, tile);
             }
 
             return null;
         }
 
-        protected abstract ActorActionResult OnPerform(Entity targetEntity, Vector2Int targetTile);
+        protected abstract ActorActionResult OnPerform(Actor user, Entity targetEntity, Vector2Int targetTile);
     }
 }

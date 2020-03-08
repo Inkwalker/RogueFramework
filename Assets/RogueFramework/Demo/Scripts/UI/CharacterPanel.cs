@@ -5,8 +5,8 @@ namespace RogueFramework.Demo
 {
     public class CharacterPanel : MonoBehaviour
     {
-        [SerializeField] InventoryView inventoryView;
-        [SerializeField] EquipmentView equipmentView;
+        [SerializeField] InventoryView inventoryView = default;
+        [SerializeField] EquipmentView equipmentView = default;
 
         public void Show(Entity character)
         {

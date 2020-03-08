@@ -51,7 +51,9 @@ namespace RogueFramework
             {
                 if (Count < Size || force)
                 {
+                    item.Entity.gameObject.SetActive(false);
                     item.Entity.transform.SetParent(transform);
+                    item.Entity.transform.localPosition = Vector3.zero;
                 }
                 else return false;
             }
@@ -101,9 +103,6 @@ namespace RogueFramework
 
             if (item != null && items.Contains(item) == false)
             {
-                item.Entity.transform.localPosition = Vector3.zero;
-                item.Entity.gameObject.SetActive(false);
-
                 items.Add(item);
 
                 OnItemAdded.Invoke(item);

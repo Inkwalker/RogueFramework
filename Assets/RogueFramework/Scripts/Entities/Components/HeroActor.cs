@@ -57,9 +57,9 @@ namespace RogueFramework
                     {
                         var item = Entity.Level.Entities.Get<Item>(Entity.Cell);
 
-                        if (item != null && ability.CanPerform(item.Entity))
+                        if (item != null && ability.CanPerform(this, item.Entity))
                         {
-                            var result = ability.Perform(item.Entity);
+                            var result = ability.Perform(this, item.Entity);
                             activeAction.SetResult(result);
                         }
                     }
@@ -75,7 +75,7 @@ namespace RogueFramework
                         {
                             var item = inv.Items[0];
 
-                            var result = ability.Perform(item.Entity);
+                            var result = ability.Perform(this, item.Entity);
                             activeAction.SetResult(result);
                         }
                     }
@@ -87,14 +87,14 @@ namespace RogueFramework
                     var interact = GetAbility(AbilitySignature.Interaction);
                     var move     = GetAbility(AbilitySignature.Move);
 
-                    if (interact != null && interact.CanPerform(entity))
+                    if (interact != null && interact.CanPerform(this, entity))
                     {
-                        var result = interact.Perform(entity);
+                        var result = interact.Perform(this, entity);
                         activeAction.SetResult(result);
                     }
                     else if (move != null)
                     {
-                        var result = move.Perform(Entity.Cell + delta.Value);
+                        var result = move.Perform(this, Entity.Cell + delta.Value);
                         activeAction.SetResult(result);
                     }                    
                 }

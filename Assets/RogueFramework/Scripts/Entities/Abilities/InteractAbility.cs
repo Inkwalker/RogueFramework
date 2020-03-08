@@ -6,23 +6,23 @@ namespace RogueFramework
     {
         public override AbilitySignature Signature => AbilitySignature.Interaction;
 
-        public override bool CanPerform(Entity target)
+        public override bool CanPerform(Actor user, Entity target)
         {
-            return base.CanPerform(target) && target.GetEntityComponent<Interactable>() != null;
+            return base.CanPerform(user, target) && target.GetEntityComponent<Interactable>() != null;
         }
 
-        public override bool CanPerform(Vector2Int tile)
+        public override bool CanPerform(Actor user, Vector2Int tile)
         {
-            return base.CanPerform(tile) && Owner.Level.Entities.Get<Interactable>(tile) != null;
+            return base.CanPerform(user, tile) && user.Entity.Level.Entities.Get<Interactable>(tile) != null;
         }
 
-        protected override ActorActionResult OnPerform(Entity targetEntity, Vector2Int targetTile)
+        protected override ActorActionResult OnPerform(Actor user, Entity targetEntity, Vector2Int targetTile)
         {
             Interactable interactable = null;
 
             if (targetEntity == null)
             {
-                interactable = Owner.Level.Entities.Get<Interactable>(targetTile);
+                interactable = user.Entity.Level.Entities.Get<Interactable>(targetTile);
             }
             else
             {
@@ -32,7 +32,7 @@ namespace RogueFramework
             if (interactable != null)
             {
                 Debug.Log($"Interacting with {interactable.Entity.name}");
-                interactable.Interact(Actor);
+                interactable.Interact(user);
             }
 
             return null;

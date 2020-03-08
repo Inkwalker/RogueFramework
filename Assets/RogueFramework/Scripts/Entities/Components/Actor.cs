@@ -36,7 +36,7 @@ namespace RogueFramework
 
         protected AEntityAbility GetAbility(AbilitySignature signature)
         {
-            var containers = Entity.GetEntityComponents<AbilitiesContainer>();
+            var containers = Entity.GetEntityComponents<EntityAbilities>();
 
             foreach (var container in containers)
             {
@@ -51,13 +51,13 @@ namespace RogueFramework
         public List<AEntityAbility> GetApplicableAbilities(Entity target)
         {
             var result = new List<AEntityAbility>();
-            var containers = Entity.GetEntityComponents<AbilitiesContainer>();
+            var containers = Entity.GetEntityComponents<EntityAbilities>();
 
             foreach (var container in containers)
             {
                 foreach (var ability in container.Abilities)
                 {
-                    if (ability.CanPerform(target))
+                    if (ability.CanPerform(this, target))
                     {
                         result.Add(ability);
                     }

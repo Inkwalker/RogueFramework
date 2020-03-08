@@ -45,8 +45,10 @@ namespace RogueFramework
         {
             if (!equipped.Contains(item))
             {
+                item.Entity.gameObject.SetActive(true);
                 item.Entity.transform.SetParent(transform);
-                
+                item.Entity.transform.localPosition = Vector3.zero;
+
                 return true;
             }
 
@@ -81,9 +83,6 @@ namespace RogueFramework
 
             if (item != null && !equipped.Contains(item))
             {
-                item.Entity.transform.localPosition = Vector3.zero;
-                item.Entity.gameObject.SetActive(true);
-
                 equipped.Add(item);
 
                 OnEquipped.Invoke(item);
