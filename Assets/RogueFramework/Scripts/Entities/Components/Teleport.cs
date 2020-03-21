@@ -7,41 +7,16 @@ namespace RogueFramework
     public class Teleport : Interactable
     {
         [Tooltip("Set to null if you want to send actors to a buffer.")]
-        [SerializeField] Entity exit;
-
-        private static Transform buffer;
-        private static Transform Buffer
-        {
-            get
-            {
-                if (buffer == null)
-                {
-                    buffer = new GameObject("Teleport Buffer").transform;
-                    DontDestroyOnLoad(buffer);
-                }
-
-                return buffer;
-            }
-        }
+        [SerializeField] Entity exit = default;
 
         public TeleportEvent onEntityTeleported;
-        public TeleportEvent onEntityAddedToBuffer;
 
         public override void Interact(Actor actor)
         {
             if (exit == null)
-                SendToBuffer(actor.Entity);
+                EntityBuffer.Push(actor.Entity);
             else
                 SendToExit(actor.Entity, exit);
-        }
-
-        private void SendToBuffer(Entity entity)
-        {
-            entity.transform.SetParent(Buffer);
-            entity.transform.position = Vector3.zero;
-            entity.gameObject.SetActive(false);
-
-            onEntityAddedToBuffer?.Invoke(entity);
         }
 
         private void SendToExit(Entity entity, Entity exit)
