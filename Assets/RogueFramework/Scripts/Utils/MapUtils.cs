@@ -12,6 +12,34 @@ namespace RogueFramework
             return (dx <= 1 && dy <= 1) && A != B;
         }
 
+        public static Vector2Int[] GetNeighborCells(Vector2Int cell, bool includeDiagonal)
+        {
+            if (includeDiagonal)
+            {
+                return new Vector2Int[]
+                {
+                    cell + new Vector2Int(0, 1),
+                    cell + new Vector2Int(1, 0),
+                    cell + new Vector2Int(0, -1),
+                    cell + new Vector2Int(-1, 0)
+                };
+            }
+            else
+            {
+                return new Vector2Int[]
+                {
+                    cell + new Vector2Int(0, 1),
+                    cell + new Vector2Int(1, 1),
+                    cell + new Vector2Int(1, 0),
+                    cell + new Vector2Int(1, -1),
+                    cell + new Vector2Int(0, -1),
+                    cell + new Vector2Int(-1, -1),
+                    cell + new Vector2Int(-1, 0),
+                    cell + new Vector2Int(-1, 1)
+                };
+            }
+        }
+
         public static Vector2Int To8Dir(Vector2 dir)
         {
             dir.Normalize();
