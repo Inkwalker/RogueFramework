@@ -34,5 +34,10 @@ namespace RogueFramework
                 Entities.Add(entity);
             }
         }
+
+        public bool IsWalkable(Vector2Int cell)
+        {
+            return Map.IsWalkable(cell) && Entities.IsWalkable(cell);
+        }
     }
 }

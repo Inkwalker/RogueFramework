@@ -14,8 +14,8 @@ namespace RogueFramework
                 if (instance == null)
                 {
                     var obj = new GameObject("Entity Buffer");
-                    instance = obj.AddComponent<EntityBuffer>();
                     obj.AddComponent<TransformChildrenTracker>();
+                    instance = obj.AddComponent<EntityBuffer>();
 
                     DontDestroyOnLoad(obj);
                 }
@@ -30,22 +30,19 @@ namespace RogueFramework
         private TransformChildrenTracker tracker;
         private List<Entity> entities = new List<Entity>();
 
+        private void Awake()
+        {
+            tracker = GetComponent<TransformChildrenTracker>();
+            tracker.OnChildAdded.AddListener(OnChildAdded);
+            tracker.OnChildRemoved.AddListener(OnChildRemoved);
+        }
+
         private void Start()
         {
             if (Instance != this)
             {
                 Destroy(gameObject);
             }
-            else
-            {
-                tracker = GetComponent<TransformChildrenTracker>();
-            }
-        }
-
-        private void OnEnable()
-        {
-            tracker?.OnChildAdded.AddListener(OnChildAdded);
-            tracker?.OnChildRemoved.AddListener(OnChildRemoved);
         }
 
         private void OnChildAdded(Transform child)
@@ -82,6 +79,9 @@ namespace RogueFramework
 
         public static void Push(Entity entity)
         {
+            if (Instance.entities.Contains(entity) == false)
+                Instance.entities.Add(entity);
+
             entity.transform.SetParent(Instance.transform);
             entity.transform.position = Vector3.zero;
             entity.gameObject.SetActive(false);
@@ -89,6 +89,8 @@ namespace RogueFramework
 
         public static void Pop(Entity entity, Level level, Vector2Int cell)
         {
+            Instance.entities.Remove(entity);
+
             level.Entities.Add(entity);
             entity.Cell = cell;
             entity.gameObject.SetActive(true);

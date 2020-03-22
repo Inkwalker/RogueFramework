@@ -26,7 +26,7 @@ namespace RogueFramework
 
         public bool CanOccupy(Vector2Int cell)
         {
-            return Entity.Level.Map.IsWalkable(cell) && Entity.Level.Entities.IsWalkable(cell);
+            return Entity.Level.IsWalkable(cell);
         }
 
         public override void OnTick()

@@ -17,6 +17,8 @@ namespace RogueFramework
                 EntityBuffer.Push(actor.Entity);
             else
                 SendToExit(actor.Entity, exit);
+
+            onEntityTeleported?.Invoke(actor.Entity);
         }
 
         private void SendToExit(Entity entity, Entity exit)
@@ -48,8 +50,6 @@ namespace RogueFramework
             }
 
             entity.Cell = position;
-
-            onEntityTeleported?.Invoke(entity);
         }
 
         [System.Serializable]
