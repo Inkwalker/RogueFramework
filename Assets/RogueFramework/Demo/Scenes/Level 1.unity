@@ -575,6 +575,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   playerTag: Player
+  movementSpeed: 0.2
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -626,7 +627,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5, y: 5, z: -10}
+  m_LocalPosition: {x: 5.5, y: -2.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1126,6 +1127,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87b3e1cb4523b3f4bb0662f0e7597a22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnEntitiesLoaded:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEntityAdded:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEntityRemoved:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1449855825
 GameObject:
   m_ObjectHideFlags: 0
@@ -4484,6 +4494,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e1cfb999800624f837071bf2749e2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnLoaded:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2002336458
 GameObject:
   m_ObjectHideFlags: 0

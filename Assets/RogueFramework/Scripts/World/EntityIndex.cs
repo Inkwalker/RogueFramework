@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace RogueFramework
 {
@@ -14,6 +14,10 @@ namespace RogueFramework
         public IReadOnlyList<Entity> All => entities;
         public IReadOnlyList<Actor> Actors => actors;
         public IReadOnlyList<Item> Items => items;
+
+        public UnityEvent OnEntitiesLoaded;
+        public EntityEvent OnEntityAdded;
+        public EntityEvent OnEntityRemoved;
 
         private void Awake()
         {
@@ -37,6 +41,8 @@ namespace RogueFramework
             {
                 entity.OnAddedToLevel(level);
             }
+
+            OnEntitiesLoaded?.Invoke();
         }
 
         private void OnTransformChildrenChanged()
@@ -63,12 +69,17 @@ namespace RogueFramework
             for (int i = entities.Count - 1; i >= 0; i--)
             {
                 if (attachedEntities.Contains(entities[i]) == false)
-                    UnregisterEntity(entities[i]);
+                {
+                    var entity = entities[i];
+                    UnregisterEntity(entity);
+                    OnEntityRemoved?.Invoke(entity);
+                }
             }
 
             foreach (var entity in addedEntities)
             {
                 entity.OnAddedToLevel(level);
+                OnEntityAdded?.Invoke(entity);
             }
         }
 
@@ -155,5 +166,7 @@ namespace RogueFramework
 
             return entity == null || !entity.BlocksMovement;
         }
+
+        [System.Serializable] public class EntityEvent : UnityEvent<Entity> { }
     }
 }

@@ -1,14 +1,17 @@
 ﻿using UnityEngine;
-using UnityEngine.Tilemaps;
+using UnityEngine.Events;
 
 namespace RogueFramework
 {
+    [RequireComponent(typeof(Grid))]
     public class Level : MonoBehaviour
     {
         public Grid Grid { get; private set; }
         public Map Map { get; private set; }
         public FieldOfView FoV { get; private set; }
         public EntityIndex Entities { get; private set; }
+
+        public UnityEvent OnLoaded;
 
         private void Awake()
         {
@@ -23,16 +26,8 @@ namespace RogueFramework
                 entitiesObj.transform.SetParent(transform);
                 Entities = entitiesObj.AddComponent<EntityIndex>();
             }
-        }
 
-        private void Start()
-        {
-            var editTimeEntities = GetComponentsInChildren<Entity>();
-
-            foreach (var entity in editTimeEntities)
-            {
-                Entities.Add(entity);
-            }
+            Entities.OnEntitiesLoaded.AddListener(() => OnLoaded?.Invoke());
         }
 
         public bool IsWalkable(Vector2Int cell)

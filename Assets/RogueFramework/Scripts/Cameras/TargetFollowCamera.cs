@@ -8,12 +8,7 @@ namespace RogueFramework
         [SerializeField] Transform target = default;
         [SerializeField] string playerTag = "Player";
 
-        private IEnumerator Start()
-        {
-            yield return null; //Wait one frame for player to spawn
-            if (target == null)
-                target = GameObject.FindWithTag(playerTag)?.transform;
-        }
+        [SerializeField] [Range(0, 1)] float movementSpeed = 0.2f; 
 
         private void LateUpdate()
         {
@@ -23,7 +18,11 @@ namespace RogueFramework
                 float y = target.position.y;
                 float z = transform.position.z;
 
-                transform.position = new Vector3(x, y, z);
+                transform.position = Vector3.Lerp(transform.position, new Vector3(x, y, z), movementSpeed);
+            }
+            else
+            {
+               target = GameObject.FindWithTag(playerTag)?.transform;
             }
         }
     }
