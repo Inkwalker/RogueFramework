@@ -8,6 +8,18 @@ TextureImporter:
   - first:
       213: 3382373700606424769
     second: ui_divider
+  - first:
+      213: -6819631148924802336
+    second: ui_log
+  - first:
+      213: 4868329161842029985
+    second: ui_slider_handle
+  - first:
+      213: 4868329161842029985
+    second: ui_slider_handle
+  - first:
+      213: -2809097878836921425
+    second: ui_slider_bg
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -157,7 +169,7 @@ TextureImporter:
         width: 16
         height: 5
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 5, y: 0, z: 5, w: 0}
       outline: []
       physicsShape: []
@@ -165,6 +177,69 @@ TextureImporter:
       bones: []
       spriteID: 1c6f44ac5fa90fe20800000000000000
       internalID: 3382373700606424769
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_log
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 4, y: 4, z: 4, w: 4}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0eae52d1a9dcb51a0800000000000000
+      internalID: -6819631148924802336
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_slider_handle
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 122
+        width: 3
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 2, z: 0, w: 2}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a5f4454497cf8340800000000000000
+      internalID: 4868329161842029985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui_slider_bg
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 113
+        width: 3
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 1, y: 0, z: 1, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fab3f98cc541409d0800000000000000
+      internalID: -2809097878836921425
       vertices: []
       indices: 
       edges: []
