@@ -32,6 +32,11 @@ public class LogView : MonoBehaviour
         Instance.scrollRect.velocity = Vector2.zero;
     }
 
+    public static void Clear()
+    {
+        Instance.DeleteAllEntries();
+    }
+
     private LogEntryView AddEntry()
     {
         LogEntryView entry;
@@ -50,6 +55,14 @@ public class LogView : MonoBehaviour
         return entry;
     }
 
+    public void DeleteAllEntries()
+    {
+        for (int i = 0; i < content.childCount; i++)
+        {
+            Destroy(content.GetChild(i).gameObject);
+        }
+    }
+
     private void SnapTo(RectTransform target)
     {
         Canvas.ForceUpdateCanvases();
@@ -57,15 +70,5 @@ public class LogView : MonoBehaviour
         content.anchoredPosition =
             (Vector2)scrollRect.transform.InverseTransformPoint(content.position)
             - (Vector2)scrollRect.transform.InverseTransformPoint(target.position);
-    }
-
-    private IEnumerator Start()
-    {
-        for (int i = 0; i < 30; i++)
-        {
-            yield return new WaitForSeconds(1);
-
-            Log($"Log message #{i}");
-        }
     }
 }
