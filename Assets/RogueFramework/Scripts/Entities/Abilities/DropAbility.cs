@@ -29,7 +29,7 @@ namespace RogueFramework
 
             if (inventory != null && item != null)
             {
-                Debug.Log($"Dropping item {targetEntity.name}");
+                LogView.Log($"{Actor.name} drops {targetEntity.name}");
                 inventory.Drop(item);
             }
 

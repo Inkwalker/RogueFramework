@@ -52,7 +52,7 @@ namespace RogueFramework
 
                 if (inv != null)
                 {
-                    Debug.Log($"Grabbing item {target.name}");
+                    LogView.Log($"{Actor.name} grabs {target.name}");
                     inv.Add(targetItem);
                 }
                 else

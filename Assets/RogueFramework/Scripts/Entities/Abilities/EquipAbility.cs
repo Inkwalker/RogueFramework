@@ -41,7 +41,6 @@ namespace RogueFramework
 
                 if (equipment != null)
                 {
-                    Debug.Log($"Equipping item {targetEntity.name}");
                     equipment.Add(targetItem);
                 }
                 else
