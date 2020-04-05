@@ -9,6 +9,8 @@ namespace RogueFramework
         [SerializeField] bool blocksMovement = true;
         [SerializeField] bool blocksVision = false;
 
+        [SerializeField] Vector2 size = Vector2.one;
+
         private List<AEntityComponent> components;
 
         public IReadOnlyList<AEntityComponent> Components
@@ -155,6 +157,36 @@ namespace RogueFramework
 
             components.Clear();
             GetEntityComponentsRecursively(gameObject, components);
+        }
+
+        public bool IsEntityOnCell(Vector2Int cell)
+        {
+            return
+                (cell.x >= Cell.x && cell.x < Cell.x + size.x) && 
+                (cell.y >= Cell.y && cell.y < Cell.y + size.y);
+        }
+
+        private void OnDrawGizmosSelected()
+        {
+            var grid = Level == null ? GetComponentInParent<Grid>() : Level.Grid;
+
+            if (grid != null)
+            {
+                var cell = grid.WorldToCell(transform.position);
+                Vector3 minLocal = grid.CellToLocalInterpolated(cell);
+                Vector3 maxLocal = grid.CellToLocalInterpolated(cell + new Vector3(size.x, size.y, 0));
+
+                Vector3 p0 = grid.LocalToWorld(minLocal);
+                Vector3 p1 = grid.LocalToWorld(new Vector3(maxLocal.x, minLocal.y, 0));
+                Vector3 p2 = grid.LocalToWorld(maxLocal);
+                Vector3 p3 = grid.LocalToWorld(new Vector3(minLocal.x, maxLocal.y, 0));
+
+                Gizmos.color = Color.yellow;
+                Gizmos.DrawLine(p0, p1);
+                Gizmos.DrawLine(p1, p2);
+                Gizmos.DrawLine(p2, p3);
+                Gizmos.DrawLine(p3, p0);
+            }
         }
     }
 }

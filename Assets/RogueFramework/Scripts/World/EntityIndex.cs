@@ -125,7 +125,7 @@ namespace RogueFramework
 
         public Entity Get(Vector2Int position)
         {
-            return entities.Find(entity => entity.Cell == position);
+            return entities.Find(entity => entity.IsEntityOnCell(position));
         }
 
         public T Get<T>(Vector2Int position) where T : AEntityComponent
@@ -143,14 +143,14 @@ namespace RogueFramework
 
         public List<Entity> GetAll(Vector2Int position)
         {
-            return entities.FindAll(entity => entity.Cell == position);
+            return entities.FindAll(entity => entity.IsEntityOnCell(position));
         }
 
         public List<T> GetAll<T>(Vector2Int position) where T : AEntityComponent
         {
             var result = new List<T>();
 
-            foreach (var entity in entities)
+            foreach (var entity in GetAll(position))
             {
                 T c = entity.GetEntityComponent<T>();
 
