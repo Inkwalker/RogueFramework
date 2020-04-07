@@ -1054,6 +1054,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: {fileID: 11400000, guid: 778c5bc80ddac8b4f9faaef983aa35fb, type: 2}
+  addedToInventory:
+    m_PersistentCalls:
+      m_Calls: []
+  removedFromInventory:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &863723698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4740,6 +4746,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: {fileID: 11400000, guid: a62147463ba1f0e46b9c68c8acc7154a, type: 2}
+  addedToInventory:
+    m_PersistentCalls:
+      m_Calls: []
+  removedFromInventory:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1561272363
 MonoBehaviour:
   m_ObjectHideFlags: 0

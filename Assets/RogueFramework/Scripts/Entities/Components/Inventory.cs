@@ -8,6 +8,9 @@ namespace RogueFramework
     {
         [SerializeField] int size = 12;
 
+        [SerializeField] InventoryEvent onItemAdded = new InventoryEvent();
+        [SerializeField] InventoryEvent onItemRemoved = new InventoryEvent();
+
         private List<Item> items = new List<Item>();
         private TransformChildrenTracker tracker;
 
@@ -15,8 +18,8 @@ namespace RogueFramework
         public int Count => items.Count;
         public IReadOnlyList<Item> Items => items;
 
-        public InventoryEvent OnItemAdded;
-        public InventoryEvent OnItemRemoved;
+        public InventoryEvent OnItemAdded => onItemAdded;
+        public InventoryEvent OnItemRemoved => onItemRemoved;
 
         private void Awake()
         {
@@ -105,6 +108,7 @@ namespace RogueFramework
             {
                 items.Add(item);
 
+                item.OnInventoryChanged(this);
                 OnItemAdded.Invoke(item);
 
                 Debug.Log($"Item added {item.name}");
@@ -117,6 +121,7 @@ namespace RogueFramework
 
             if (item != null && items.Remove(item))
             {
+                item.OnInventoryChanged(null);
                 OnItemRemoved.Invoke(item);
 
                 Debug.Log($"Item removed {item.name}");
