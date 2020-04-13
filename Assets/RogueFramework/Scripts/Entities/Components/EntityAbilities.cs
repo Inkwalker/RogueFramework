@@ -36,12 +36,7 @@ namespace RogueFramework
             abilities = new List<AEntityAbility>();
             AddChildAbilities();
 
-            tracker = GetComponent<TransformChildrenTracker>();
-            if (tracker == null)
-            {
-                tracker = gameObject.AddComponent<TransformChildrenTracker>();
-                tracker.hideFlags = HideFlags.HideInInspector;
-            }
+            tracker = TransformChildrenTracker.GetOrCreate(gameObject);
 
             tracker.OnChildAdded.AddListener(OnChildAdded);
             tracker.OnChildRemoved.AddListener(OnChildRemoved);

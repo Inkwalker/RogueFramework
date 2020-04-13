@@ -12,6 +12,18 @@ namespace RogueFramework
         public TrackerEvent OnChildAdded   = new TrackerEvent();
         public TrackerEvent OnChildRemoved = new TrackerEvent();
 
+        public static TransformChildrenTracker GetOrCreate(GameObject gameObject)
+        {
+            var tracker = gameObject.GetComponent<TransformChildrenTracker>();
+            if (tracker == null)
+            {
+                tracker = gameObject.AddComponent<TransformChildrenTracker>();
+                tracker.hideFlags = HideFlags.HideInInspector;
+            }
+
+            return tracker;
+        }
+
         private void OnEnable()
         {
             FetchChildren();
