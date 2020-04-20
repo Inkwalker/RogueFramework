@@ -85,11 +85,17 @@ namespace RogueFramework
                     var entity = Entity.Level.Entities.Get(Entity.Cell + delta.Value);
 
                     var interact = GetAbility(AbilitySignature.Interaction);
+                    var attack   = GetAbility(AbilitySignature.Attack);
                     var move     = GetAbility(AbilitySignature.Move);
 
                     if (interact != null && interact.CanPerform(this, entity))
                     {
                         var result = interact.Perform(this, entity);
+                        activeAction.SetResult(result);
+                    }
+                    else if (attack != null && attack.CanPerform(this, entity))
+                    {
+                        var result = attack.Perform(this, entity);
                         activeAction.SetResult(result);
                     }
                     else if (move != null)

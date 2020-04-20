@@ -6,6 +6,7 @@
         Move,
         Interaction,
         ItemTake,
-        ItemDrop
+        ItemDrop,
+        Attack
     }
 }

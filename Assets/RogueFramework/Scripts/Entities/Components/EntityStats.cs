@@ -22,6 +22,11 @@ namespace RogueFramework
             tracker.OnChildRemoved.AddListener(OnChildRemoved);
         }
 
+        public T Get<T>() where T : AEntityStat
+        {
+            return stats.Find(s => s is T) as T;
+        }
+
         private void OnChildAdded(Transform child)
         {
             var stat = child.GetComponent<AEntityStat>();
