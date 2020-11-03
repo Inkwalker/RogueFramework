@@ -633,6 +633,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36000ac4cd29f044f969ac92a2ee2431, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  externalContainers: []
   OnStatsChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1742,11 +1743,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1153672674}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a3eab1d12afe4e47917ba500280ee5e, type: 3}
+  m_Script: {fileID: 11500000, guid: ad813aa49a30cd44cb0ce6376103e478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: {fileID: 11400000, guid: d11ac11e788029d4483c517b687187fa, type: 2}
   defaultValue: 100
-  maxValue: 100
+  hasCap: 1
+  capValue: 100
 --- !u!1 &1188625126
 GameObject:
   m_ObjectHideFlags: 0
@@ -1974,6 +1977,7 @@ GameObject:
   - component: {fileID: 1351408212}
   - component: {fileID: 1351408214}
   - component: {fileID: 1351408213}
+  - component: {fileID: 1351408215}
   m_Layer: 0
   m_Name: Equipment
   m_TagString: Untagged
@@ -2029,6 +2033,22 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnUnequipped:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &1351408215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1351408211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36000ac4cd29f044f969ac92a2ee2431, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  externalContainers: []
+  OnStatsChanged:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &1377394789
@@ -4956,7 +4976,7 @@ GameObject:
   - component: {fileID: 1546989259}
   - component: {fileID: 1546989260}
   m_Layer: 0
-  m_Name: Attack
+  m_Name: Attack Modifier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4985,10 +5005,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1546989258}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6852a76676173cf4087773bbc11aca07, type: 3}
+  m_Script: {fileID: 11500000, guid: 4ecfbf4b87b2d8145b91a3ccb9dbf85e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultValue: 1
+  type: {fileID: 11400000, guid: 401a3fd8db2777140ac3933c68c645bf, type: 2}
+  value: 1
 --- !u!1 &1561272360
 GameObject:
   m_ObjectHideFlags: 0
@@ -5254,50 +5275,6 @@ MonoBehaviour:
   OnAbilitiesChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!1 &1585270232
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1585270233}
-  - component: {fileID: 1585270234}
-  m_Layer: 0
-  m_Name: Experience
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1585270233
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1585270232}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1632833724}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1585270234
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1585270232}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b80e48b09e02494490cc64038b0ddc4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultValue: 0
 --- !u!1 &1615219204
 GameObject:
   m_ObjectHideFlags: 0
@@ -5338,11 +5315,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1615219204}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a3eab1d12afe4e47917ba500280ee5e, type: 3}
+  m_Script: {fileID: 11500000, guid: ad813aa49a30cd44cb0ce6376103e478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultValue: 100
-  maxValue: 100
+  type: {fileID: 11400000, guid: d11ac11e788029d4483c517b687187fa, type: 2}
+  defaultValue: 30
+  hasCap: 1
+  capValue: 30
 --- !u!1 &1632833723
 GameObject:
   m_ObjectHideFlags: 0
@@ -5372,7 +5351,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1153672675}
-  - {fileID: 1585270233}
   m_Father: {fileID: 1205932856}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5388,6 +5366,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36000ac4cd29f044f969ac92a2ee2431, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  externalContainers:
+  - {fileID: 1351408212}
   OnStatsChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -5483,6 +5463,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cost: 1
+  attackStat: {fileID: 11400000, guid: 401a3fd8db2777140ac3933c68c645bf, type: 2}
+  defenceStat: {fileID: 11400000, guid: 80eebcc610e1f69419cf9763d9e75723, type: 2}
+  healthStat: {fileID: 11400000, guid: d11ac11e788029d4483c517b687187fa, type: 2}
 --- !u!1 &1898620238
 GameObject:
   m_ObjectHideFlags: 0
@@ -5527,6 +5510,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36000ac4cd29f044f969ac92a2ee2431, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  externalContainers: []
   OnStatsChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -5876,6 +5860,16 @@ PrefabInstance:
     - target: {fileID: 8766295065496713634, guid: 1479b0d8bc4b76e43a581cab28e88ac1,
         type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8766295065553472550, guid: 1479b0d8bc4b76e43a581cab28e88ac1,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8766295065553472550, guid: 1479b0d8bc4b76e43a581cab28e88ac1,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8766295065627100974, guid: 1479b0d8bc4b76e43a581cab28e88ac1,

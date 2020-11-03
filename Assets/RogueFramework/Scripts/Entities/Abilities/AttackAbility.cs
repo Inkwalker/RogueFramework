@@ -1,11 +1,19 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace RogueFramework
 {
     public class AttackAbility : AEntityAbility
     {
+        [SerializeField] StatType attackStat  = null;
+        [SerializeField] StatType defenceStat = null;
+        [SerializeField] StatType healthStat  = null;
+
         public override AbilitySignature Signature => AbilitySignature.Attack;
+
+        private void Awake()
+        {
+            if (attackStat == null || defenceStat == null || healthStat == null) Debug.LogError("Stat Types are not set", this);
+        }
 
         public override bool CanPerform(Actor user, Vector2Int tile)
         {
@@ -22,20 +30,30 @@ namespace RogueFramework
             if (targetEntity != null)
             {
                 var stats = user.Entity.GetEntityComponent<EntityStats>();
-                var attack = stats?.Get<AttackStat>();
+
+                int attack = stats ? stats.GetModifiedStat(attackStat) : 0;
 
                 var targetStats = targetEntity.GetEntityComponent<EntityStats>();
-                var targetHP = targetStats?.Get<HealthStat>();
+                var targetHealthStat = targetStats?.GetRawStat(healthStat);
 
-                if (attack && targetHP)
+                int targetDefence = targetStats ? targetStats.GetModifiedStat(defenceStat) : 0;
+
+                int damage = attack - targetDefence;
+                if (damage < 0) damage = 0;
+
+                if (targetHealthStat)
                 {
-                    targetHP.Value -= attack.Value;
-
-                    LogView.Log($"{user.Entity.name} deals {attack.Value} damage to {targetEntity.name}");
+                    targetHealthStat.Value -= damage;
+                    Log(user.Entity.name, targetEntity.name, damage);
                 }
             }
 
             return null;
+        }
+
+        private void Log(string userName, string targetName, int damage)
+        {
+            LogView.Log($"{userName} deals {damage} damage to {targetName}");
         }
         
     }
