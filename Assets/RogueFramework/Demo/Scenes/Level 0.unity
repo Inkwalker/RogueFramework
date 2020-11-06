@@ -164,6 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b65e79c12e1cf4e41ba0a4b1d929e32b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shared: 0
   cost: 4
 --- !u!1 &112770318
 GameObject:
@@ -208,6 +209,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8588841202bb17746bf1e213743f20d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shared: 1
   cost: 1
 --- !u!1 &119572136
 GameObject:
@@ -316,7 +318,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0b2cb6603f22074b8d39c1ced866188, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  includeChildEntities: 0
+  containers: []
   OnAbilitiesChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -363,6 +365,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8588841202bb17746bf1e213743f20d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shared: 0
   cost: 1
 --- !u!1 &285769917
 GameObject:
@@ -489,6 +492,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a4eccbbbb418f2498f0bc7c79ff3ea8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shared: 0
   cost: 1
 --- !u!1 &519420028
 GameObject:
@@ -844,6 +848,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55e022b9e6af4d14596df215c313c1d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shared: 0
   cost: 1
 --- !u!1 &811887950
 GameObject:
@@ -971,7 +976,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0b2cb6603f22074b8d39c1ced866188, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  includeChildEntities: 0
+  containers: []
   OnAbilitiesChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1576,6 +1581,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b65e79c12e1cf4e41ba0a4b1d929e32b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shared: 0
   cost: 4
 --- !u!1 &1137715971
 GameObject:
@@ -1620,6 +1626,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f4f4d75e0b6a8448b40e073b93017f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shared: 0
   cost: 1
 --- !u!1 &1140393318
 GameObject:
@@ -1976,8 +1983,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1351408212}
   - component: {fileID: 1351408214}
-  - component: {fileID: 1351408213}
-  - component: {fileID: 1351408215}
   m_Layer: 0
   m_Name: Equipment
   m_TagString: Untagged
@@ -1999,22 +2004,6 @@ Transform:
   m_Father: {fileID: 1205932856}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1351408213
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1351408211}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b2cb6603f22074b8d39c1ced866188, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  includeChildEntities: 1
-  OnAbilitiesChanged:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &1351408214
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2033,22 +2022,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnUnequipped:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &1351408215
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1351408211}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36000ac4cd29f044f969ac92a2ee2431, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  externalContainers: []
-  OnStatsChanged:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &1377394789
@@ -5271,7 +5244,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0b2cb6603f22074b8d39c1ced866188, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  includeChildEntities: 0
+  containers:
+  - {fileID: 1351408212}
   OnAbilitiesChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -5415,7 +5389,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0b2cb6603f22074b8d39c1ced866188, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  includeChildEntities: 0
+  containers: []
   OnAbilitiesChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -5462,6 +5436,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b7d4e67f994fe2419824af6ac255e4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shared: 1
   cost: 1
   attackStat: {fileID: 11400000, guid: 401a3fd8db2777140ac3933c68c645bf, type: 2}
   defenceStat: {fileID: 11400000, guid: 80eebcc610e1f69419cf9763d9e75723, type: 2}
@@ -5834,6 +5809,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84d1d3baf252ccd4cac8b1b4f1ef7fca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shared: 0
   cost: 1
 --- !u!1001 &8766295067160942215
 PrefabInstance:

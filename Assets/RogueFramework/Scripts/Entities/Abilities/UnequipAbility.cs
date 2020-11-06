@@ -38,7 +38,7 @@ namespace RogueFramework
 
             if (equipment != null)
             {
-                Debug.Log($"Unequipping item {targetEntity.name}");
+                Debug.Log($"{user.Entity.name} | Unequipping item: {targetEntity.name}", this);
                 equipment.Remove(targetItem);
 
                 var inv = user.Entity.GetEntityComponent<Inventory>();

@@ -4,11 +4,13 @@ namespace RogueFramework
 {
     public abstract class AEntityAbility : MonoBehaviour
     {
+        [SerializeField] bool shared = false;
         [SerializeField] int cost = 1;
 
         private Entity owner;
 
         public abstract AbilitySignature Signature { get; }
+        public bool Shared => shared;
         public int Cost => cost;
         public Entity Owner
         {

@@ -111,7 +111,7 @@ namespace RogueFramework
                 item.OnInventoryChanged(this);
                 OnItemAdded.Invoke(item);
 
-                Debug.Log($"Item added {item.name}");
+                Debug.Log($"{Entity.name} | Item added: {item.name}", this);
             }
         }
 
@@ -124,7 +124,7 @@ namespace RogueFramework
                 item.OnInventoryChanged(null);
                 OnItemRemoved.Invoke(item);
 
-                Debug.Log($"Item removed {item.name}");
+                Debug.Log($"{Entity.name} | Item removed: {item.name}", this);
             }
         }
 
