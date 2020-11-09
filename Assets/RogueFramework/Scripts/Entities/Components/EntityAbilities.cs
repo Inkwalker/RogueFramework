@@ -156,6 +156,14 @@ namespace RogueFramework
             }
         }
 
+        public override void OnTick()
+        {
+            foreach (var ability in abilities.Abilities)
+            {
+                ability.Tick(Entity);
+            }
+        }
+
         private class AbilitiesTable
         {
             //TODO: Add signature lookup table for performance increase.

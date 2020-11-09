@@ -30,6 +30,8 @@ namespace RogueFramework
 
         protected virtual void OnOwnerChanged() { }
 
+        public virtual void Tick(Entity target) { }
+
         public virtual bool CanPerform(Actor user, Entity target)
         {
             return user != null && Owner != null && target != null;
